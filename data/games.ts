@@ -1,0 +1,95 @@
+﻿import { Game, Team, Stadium } from './types';
+
+const teams: Record<string, Team> = {
+  lg: { id: 'lg', name: 'LG 트윈스', shortName: 'LG', sport: 'baseball' , logoUrl: 'https://i.namu.wiki/i/LoA0ZroRYN-YPAFpexdNtzpOSUSOeXarEB7j0VYrJfcUmiaMXgBAgwcQFF_f_oYG9YqjD-uxTLrPbpdYM_me9bjgXcKknewKkcXjIg5ByUHai3X0FQpJ3ToEQQwoUkv0Go_7YKI8qdBbRPHScmuTow.svg'},
+  doosan: { id: 'doosan', name: '두산 베어스', shortName: '두산', sport: 'baseball' , logoUrl: 'https://i.namu.wiki/i/IVpN43DBlDGvxSnwALGcUIMdHJjRgivrAjV6SqSO7q8-atsaiiLVQ5lW7saCW3mcl5YaK2n41ZDqVV4gTwDKRaUoPOoRjq4KIqsXVmKahJtv2Y3woRCjlaTeHzIAVolNX1-0IyqrklwsjY5BJ0TpRw.svg'},
+  kiwoom: { id: 'kiwoom', name: '키움 히어로즈', shortName: '키움', sport: 'baseball' , logoUrl: 'https://i.namu.wiki/i/q-THPUhA0WbkGPgdpLWV9cSBkJVKszjTPIz5jDfr1_V0q6nVvn4dYXDXFO48sTnEPjUMzGjk4UppBTllaVGJsTefY8NDNtDqgHHgxIs2ZIeKpsEpeoNf55dIDISEyzAbm4v-u0zR1dDTj_G3e2l0gA.svg'},
+  ssg: { id: 'ssg', name: 'SSG 랜더스', shortName: 'SSG', sport: 'baseball' , logoUrl: 'https://i.namu.wiki/i/CNWmnRx0aRD54ckCuFx7zWEp_Mwh5ACCbsxzE0c9j6zlN-lQYIDnVpvWorZOH7HU1Gc3IOWNFfs85H1hl5yApHJNAUILus6H4DXqxTxB1NZt1u4-vBrpbGD9MXYtOFC9Hh4HJPyt__csWW3nS-k6Vw.svg'},
+  hanwha: { id: 'hanwha', name: '한화 이글스', shortName: '한화', sport: 'baseball' , logoUrl: 'https://i.namu.wiki/i/3Dm9pQ5kXBK-L9WUpvmVobJwkZfKu425z0iZbP-Htso-kCoZyfrUgaMP_C7LhAMoe1Ry4D6uRMLfcGp5QC6lTg.svg'},
+  lotte: { id: 'lotte', name: '롯데 자이언츠', shortName: '롯데', sport: 'baseball' , logoUrl: 'https://i.namu.wiki/i/0-xM-7gO5Y0SX6yOQqY0mjCUcBIdGLnMoyj8940IE_Z4LRenD0AoKcBe535tYNyVFaE0xhBrOmAaC8yvHDSrKimRtr_kCDRHEQXPsFuzHgH8pEEEaRRl8kbi76fCbMBRh6oE0qMM6GHZmSGWmbz5IQ.svg'},
+  samsung: { id: 'samsung', name: '삼성 라이온즈', shortName: '삼성', sport: 'baseball' , logoUrl: 'https://i.namu.wiki/i/H8oFAQ4UwXJKPKBeRCugv7CfWC9-hu8oMqI25ojFRfSomvZ4cJ3AfOs0RNf__XpgIdT5n3PGKicMqI23X0EWJ7CMfUsR_AMfKpypnJ4Fcwj4VQTIfbkGNBjuFAktvS1K9OkZU18VPgJGBg0-qczpag.svg'},
+  kia: { id: 'kia', name: 'KIA 타이거즈', shortName: 'KIA', sport: 'baseball' , logoUrl: 'https://i.namu.wiki/i/r02h_UhZzYr7uf-x1LKOQ2oGH2Yu6Sme8n1cF8wUCesSFzoglMAXFWAMaGqxxTcslSYIQD6GWA8rXpH9ZypzTyyB_6cfw_7AamXFu9g9GtaSDzrgR4E0pBdrlAA7VCqYAIKw4ermcQugi74wLwmF2w.svg'},
+
+  seoul: { id: 'seoul', name: 'FC 서울', shortName: '서울', sport: 'football' , logoUrl: 'https://i.namu.wiki/i/LoA0ZroRYN-YPAFpexdNtzpOSUSOeXarEB7j0VYrJfcUmiaMXgBAgwcQFF_f_oYG9YqjD-uxTLrPbpdYM_me9bjgXcKknewKkcXjIg5ByUHai3X0FQpJ3ToEQQwoUkv0Go_7YKI8qdBbRPHScmuTow.svg'},
+  suwonfc: { id: 'suwonfc', name: '수원 FC', shortName: '수원FC', sport: 'football' , logoUrl: 'https://i.namu.wiki/i/LoA0ZroRYN-YPAFpexdNtzpOSUSOeXarEB7j0VYrJfcUmiaMXgBAgwcQFF_f_oYG9YqjD-uxTLrPbpdYM_me9bjgXcKknewKkcXjIg5ByUHai3X0FQpJ3ToEQQwoUkv0Go_7YKI8qdBbRPHScmuTow.svg'},
+  ulsan: { id: 'ulsan', name: '울산 HD', shortName: '울산', sport: 'football' , logoUrl: 'https://i.namu.wiki/i/LoA0ZroRYN-YPAFpexdNtzpOSUSOeXarEB7j0VYrJfcUmiaMXgBAgwcQFF_f_oYG9YqjD-uxTLrPbpdYM_me9bjgXcKknewKkcXjIg5ByUHai3X0FQpJ3ToEQQwoUkv0Go_7YKI8qdBbRPHScmuTow.svg'},
+  jeonbuk: { id: 'jeonbuk', name: '전북 현대', shortName: '전북', sport: 'football' , logoUrl: 'https://i.namu.wiki/i/LoA0ZroRYN-YPAFpexdNtzpOSUSOeXarEB7j0VYrJfcUmiaMXgBAgwcQFF_f_oYG9YqjD-uxTLrPbpdYM_me9bjgXcKknewKkcXjIg5ByUHai3X0FQpJ3ToEQQwoUkv0Go_7YKI8qdBbRPHScmuTow.svg'},
+  daegu: { id: 'daegu', name: '대구 FC', shortName: '대구', sport: 'football' , logoUrl: 'https://i.namu.wiki/i/LoA0ZroRYN-YPAFpexdNtzpOSUSOeXarEB7j0VYrJfcUmiaMXgBAgwcQFF_f_oYG9YqjD-uxTLrPbpdYM_me9bjgXcKknewKkcXjIg5ByUHai3X0FQpJ3ToEQQwoUkv0Go_7YKI8qdBbRPHScmuTow.svg'},
+  pohang: { id: 'pohang', name: '포항 스틸러스', shortName: '포항', sport: 'football' , logoUrl: 'https://i.namu.wiki/i/LoA0ZroRYN-YPAFpexdNtzpOSUSOeXarEB7j0VYrJfcUmiaMXgBAgwcQFF_f_oYG9YqjD-uxTLrPbpdYM_me9bjgXcKknewKkcXjIg5ByUHai3X0FQpJ3ToEQQwoUkv0Go_7YKI8qdBbRPHScmuTow.svg'},
+  anyang: { id: 'anyang', name: 'FC 안양', shortName: '안양', sport: 'football' , logoUrl: 'https://i.namu.wiki/i/LoA0ZroRYN-YPAFpexdNtzpOSUSOeXarEB7j0VYrJfcUmiaMXgBAgwcQFF_f_oYG9YqjD-uxTLrPbpdYM_me9bjgXcKknewKkcXjIg5ByUHai3X0FQpJ3ToEQQwoUkv0Go_7YKI8qdBbRPHScmuTow.svg'},
+  seoulE: { id: 'seoulE', name: '서울 이랜드', shortName: '서울E', sport: 'football' , logoUrl: 'https://i.namu.wiki/i/LoA0ZroRYN-YPAFpexdNtzpOSUSOeXarEB7j0VYrJfcUmiaMXgBAgwcQFF_f_oYG9YqjD-uxTLrPbpdYM_me9bjgXcKknewKkcXjIg5ByUHai3X0FQpJ3ToEQQwoUkv0Go_7YKI8qdBbRPHScmuTow.svg'},
+  busan: { id: 'busan', name: '부산 아이파크', shortName: '부산', sport: 'football' , logoUrl: 'https://i.namu.wiki/i/LoA0ZroRYN-YPAFpexdNtzpOSUSOeXarEB7j0VYrJfcUmiaMXgBAgwcQFF_f_oYG9YqjD-uxTLrPbpdYM_me9bjgXcKknewKkcXjIg5ByUHai3X0FQpJ3ToEQQwoUkv0Go_7YKI8qdBbRPHScmuTow.svg'},
+  jeonnam: { id: 'jeonnam', name: '전남 드래곤즈', shortName: '전남', sport: 'football' , logoUrl: 'https://i.namu.wiki/i/LoA0ZroRYN-YPAFpexdNtzpOSUSOeXarEB7j0VYrJfcUmiaMXgBAgwcQFF_f_oYG9YqjD-uxTLrPbpdYM_me9bjgXcKknewKkcXjIg5ByUHai3X0FQpJ3ToEQQwoUkv0Go_7YKI8qdBbRPHScmuTow.svg'},
+
+  giants: { id: 'giants', name: '요미우리 자이언츠', shortName: '요미우리', sport: 'baseball' , logoUrl: 'https://i.namu.wiki/i/LoA0ZroRYN-YPAFpexdNtzpOSUSOeXarEB7j0VYrJfcUmiaMXgBAgwcQFF_f_oYG9YqjD-uxTLrPbpdYM_me9bjgXcKknewKkcXjIg5ByUHai3X0FQpJ3ToEQQwoUkv0Go_7YKI8qdBbRPHScmuTow.svg'},
+  swallows: { id: 'swallows', name: '야쿠르트 스왈로즈', shortName: '야쿠르트', sport: 'baseball' , logoUrl: 'https://i.namu.wiki/i/LoA0ZroRYN-YPAFpexdNtzpOSUSOeXarEB7j0VYrJfcUmiaMXgBAgwcQFF_f_oYG9YqjD-uxTLrPbpdYM_me9bjgXcKknewKkcXjIg5ByUHai3X0FQpJ3ToEQQwoUkv0Go_7YKI8qdBbRPHScmuTow.svg'},
+  hawks: { id: 'hawks', name: '소프트뱅크 호크스', shortName: '소프트뱅크', sport: 'baseball' , logoUrl: 'https://i.namu.wiki/i/LoA0ZroRYN-YPAFpexdNtzpOSUSOeXarEB7j0VYrJfcUmiaMXgBAgwcQFF_f_oYG9YqjD-uxTLrPbpdYM_me9bjgXcKknewKkcXjIg5ByUHai3X0FQpJ3ToEQQwoUkv0Go_7YKI8qdBbRPHScmuTow.svg'},
+  buffaloes: { id: 'buffaloes', name: '오릭스 버팔로즈', shortName: '오릭스', sport: 'baseball' , logoUrl: 'https://i.namu.wiki/i/LoA0ZroRYN-YPAFpexdNtzpOSUSOeXarEB7j0VYrJfcUmiaMXgBAgwcQFF_f_oYG9YqjD-uxTLrPbpdYM_me9bjgXcKknewKkcXjIg5ByUHai3X0FQpJ3ToEQQwoUkv0Go_7YKI8qdBbRPHScmuTow.svg'},
+  marines: { id: 'marines', name: '지바 롯데 마린즈', shortName: '지바롯데', sport: 'baseball' , logoUrl: 'https://i.namu.wiki/i/LoA0ZroRYN-YPAFpexdNtzpOSUSOeXarEB7j0VYrJfcUmiaMXgBAgwcQFF_f_oYG9YqjD-uxTLrPbpdYM_me9bjgXcKknewKkcXjIg5ByUHai3X0FQpJ3ToEQQwoUkv0Go_7YKI8qdBbRPHScmuTow.svg'},
+
+  reds: { id: 'reds', name: '우라와 레즈', shortName: '우라와', sport: 'football' , logoUrl: 'https://i.namu.wiki/i/LoA0ZroRYN-YPAFpexdNtzpOSUSOeXarEB7j0VYrJfcUmiaMXgBAgwcQFF_f_oYG9YqjD-uxTLrPbpdYM_me9bjgXcKknewKkcXjIg5ByUHai3X0FQpJ3ToEQQwoUkv0Go_7YKI8qdBbRPHScmuTow.svg'},
+  fctokyo: { id: 'fctokyo', name: 'FC 도쿄', shortName: 'FC도쿄', sport: 'football' , logoUrl: 'https://i.namu.wiki/i/LoA0ZroRYN-YPAFpexdNtzpOSUSOeXarEB7j0VYrJfcUmiaMXgBAgwcQFF_f_oYG9YqjD-uxTLrPbpdYM_me9bjgXcKknewKkcXjIg5ByUHai3X0FQpJ3ToEQQwoUkv0Go_7YKI8qdBbRPHScmuTow.svg'},
+  yokohama: { id: 'yokohama', name: '요코하마 F. 마리노스', shortName: '요코하마FM', sport: 'football' , logoUrl: 'https://i.namu.wiki/i/LoA0ZroRYN-YPAFpexdNtzpOSUSOeXarEB7j0VYrJfcUmiaMXgBAgwcQFF_f_oYG9YqjD-uxTLrPbpdYM_me9bjgXcKknewKkcXjIg5ByUHai3X0FQpJ3ToEQQwoUkv0Go_7YKI8qdBbRPHScmuTow.svg'},
+  gamba: { id: 'gamba', name: '감바 오사카', shortName: '감바', sport: 'football' , logoUrl: 'https://i.namu.wiki/i/LoA0ZroRYN-YPAFpexdNtzpOSUSOeXarEB7j0VYrJfcUmiaMXgBAgwcQFF_f_oYG9YqjD-uxTLrPbpdYM_me9bjgXcKknewKkcXjIg5ByUHai3X0FQpJ3ToEQQwoUkv0Go_7YKI8qdBbRPHScmuTow.svg'},
+  vegalta: { id: 'vegalta', name: '베갈타 센다이', shortName: '센다이', sport: 'football' , logoUrl: 'https://i.namu.wiki/i/LoA0ZroRYN-YPAFpexdNtzpOSUSOeXarEB7j0VYrJfcUmiaMXgBAgwcQFF_f_oYG9YqjD-uxTLrPbpdYM_me9bjgXcKknewKkcXjIg5ByUHai3X0FQpJ3ToEQQwoUkv0Go_7YKI8qdBbRPHScmuTow.svg'},
+  iwata: { id: 'iwata', name: '주빌로 이와타', shortName: '이와타', sport: 'football', logoUrl: 'https://i.namu.wiki/i/LoA0ZroRYN-YPAFpexdNtzpOSUSOeXarEB7j0VYrJfcUmiaMXgBAgwcQFF_f_oYG9YqjD-uxTLrPbpdYM_me9bjgXcKknewKkcXjIg5ByUHai3X0FQpJ3ToEQQwoUkv0Go_7YKI8qdBbRPHScmuTow.svg' }
+};
+
+const stadiums: Record<string, Stadium> = {
+  jamsil: { id: 'jamsil', name: '잠실야구장', city: '서울', country: 'KR', lat: 37.51213, lng: 127.0710 },
+  gocheok: { id: 'gocheok', name: '고척스카이돔', city: '서울', country: 'KR', lat: 37.49821, lng: 126.86709 },
+  seoulWorldCup: { id: 'seoulWorldCup', name: '서울월드컵경기장', city: '서울', country: 'KR', lat: 37.56826, lng: 126.89724 },
+  suwonBaseball: { id: 'suwonBaseball', name: '수원KT위즈파크', city: '수원', country: 'KR', lat: 37.29997, lng: 127.00976 },
+  suwonSports: { id: 'suwonSports', name: '수원종합운동장', city: '수원', country: 'KR', lat: 37.29906, lng: 127.00957 },
+  daeguPark: { id: 'daeguPark', name: '대구삼성라이온즈파크', city: '대구', country: 'KR', lat: 35.84199, lng: 128.68174 },
+  dgbPark: { id: 'dgbPark', name: 'DGB대구은행파크', city: '대구', country: 'KR', lat: 35.88098, lng: 128.58989 },
+  daejeonBaseball: { id: 'daejeonBaseball', name: '대전한화생명볼파크', city: '대전', country: 'KR', lat: 36.3171, lng: 127.4291 },
+  busanAsiad: { id: 'busanAsiad', name: '부산아시아드주경기장', city: '부산', country: 'KR', lat: 35.19096, lng: 129.06026 },
+  sajik: { id: 'sajik', name: '사직야구장', city: '부산', country: 'KR', lat: 35.19447, lng: 129.06153 },
+  gwangjuChamp: { id: 'gwangjuChamp', name: '광주기아챔피언스필드', city: '광주', country: 'KR', lat: 35.16815, lng: 126.88888 },
+  anyangStadium: { id: 'anyangStadium', name: '안양종합운동장', city: '안양', country: 'KR', lat: 37.40565, lng: 126.95373 },
+  mokdong: { id: 'mokdong', name: '목동종합운동장', city: '서울', country: 'KR', lat: 37.53023, lng: 126.88154 },
+  dgbank: { id: 'dgbank', name: '전주월드컵경기장', city: '전주', country: 'KR', lat: 35.86823, lng: 127.06476 },
+  steelYard: { id: 'steelYard', name: '포항스틸야드', city: '포항', country: 'KR', lat: 36.0072, lng: 129.3634 },
+
+  tokyoDome: { id: 'tokyoDome', name: '도쿄돔', city: '도쿄', country: 'JP', lat: 35.70564, lng: 139.75189 },
+  jingu: { id: 'jingu', name: '메이지진구야구장', city: '도쿄', country: 'JP', lat: 35.67452, lng: 139.71703 },
+  ajinomoto: { id: 'ajinomoto', name: '아지노모토 스타디움', city: '도쿄', country: 'JP', lat: 35.66438, lng: 139.52723 },
+  saitama: { id: 'saitama', name: '사이타마 스타디움 2002', city: '사이타마', country: 'JP', lat: 35.9032, lng: 139.71758 },
+  escon: { id: 'escon', name: '에스콘필드 홋카이도', city: '삿포로', country: 'JP', lat: 43.0145, lng: 141.5633 },
+  nissan: { id: 'nissan', name: '닛산 스타디움', city: '요코하마', country: 'JP', lat: 35.51002, lng: 139.60698 },
+  marine: { id: 'marine', name: 'ZOZO 마린 스타디움', city: '지바', country: 'JP', lat: 35.64547, lng: 140.03073 },
+  paypay: { id: 'paypay', name: '미즈호 PayPay 돔', city: '후쿠오카', country: 'JP', lat: 33.5953, lng: 130.362 },
+  panasonic: { id: 'panasonic', name: '파나소닉 스타디움 스이타', city: '오사카', country: 'JP', lat: 34.80549, lng: 135.54108 },
+  yurtec: { id: 'yurtec', name: '유아텍 스타디움 센다이', city: '센다이', country: 'JP', lat: 38.32319, lng: 140.88161 },
+  ecopa: { id: 'ecopa', name: '시즈오카 스타디움 에코파', city: '시즈오카', country: 'JP', lat: 34.7457, lng: 137.9694 },
+  kyocera: { id: 'kyocera', name: '교세라 돔 오사카', city: '오사카', country: 'JP', lat: 34.66935, lng: 135.47601 }
+};
+
+export const games: Game[] = [
+  { id: 'kr-1', date: '2026-03-01', time: '14:00', league: 'KBO', sport: 'baseball', homeTeam: teams.lg, awayTeam: teams.doosan, stadium: stadiums.jamsil },
+  { id: 'kr-2', date: '2026-03-01', time: '14:00', league: 'KBO', sport: 'baseball', homeTeam: teams.kiwoom, awayTeam: teams.ssg, stadium: stadiums.gocheok },
+  { id: 'kr-3', date: '2026-03-01', time: '16:30', league: 'KLEAGUE1', sport: 'football', homeTeam: teams.seoul, awayTeam: teams.ulsan, stadium: stadiums.seoulWorldCup },
+  { id: 'kr-4', date: '2026-03-01', time: '16:30', league: 'KLEAGUE1', sport: 'football', homeTeam: teams.suwonfc, awayTeam: teams.daegu, stadium: stadiums.suwonSports },
+  { id: 'kr-5', date: '2026-03-02', time: '18:30', league: 'KBO', sport: 'baseball', homeTeam: teams.hanwha, awayTeam: teams.samsung, stadium: stadiums.daejeonBaseball },
+  { id: 'kr-6', date: '2026-03-02', time: '19:00', league: 'KBO', sport: 'baseball', homeTeam: teams.lotte, awayTeam: teams.kia, stadium: stadiums.sajik },
+  { id: 'kr-7', date: '2026-03-02', time: '19:30', league: 'KLEAGUE1', sport: 'football', homeTeam: teams.jeonbuk, awayTeam: teams.pohang, stadium: stadiums.dgbank },
+  { id: 'kr-8', date: '2026-03-02', time: '19:30', league: 'KLEAGUE2', sport: 'football', homeTeam: teams.busan, awayTeam: teams.jeonnam, stadium: stadiums.busanAsiad },
+  { id: 'kr-9', date: '2026-03-03', time: '14:00', league: 'KBO', sport: 'baseball', homeTeam: teams.kia, awayTeam: teams.samsung, stadium: stadiums.gwangjuChamp },
+  { id: 'kr-10', date: '2026-03-03', time: '16:30', league: 'KLEAGUE2', sport: 'football', homeTeam: teams.anyang, awayTeam: teams.seoulE, stadium: stadiums.anyangStadium },
+  { id: 'kr-11', date: '2026-03-03', time: '18:00', league: 'KLEAGUE1', sport: 'football', homeTeam: teams.daegu, awayTeam: teams.suwonfc, stadium: stadiums.dgbPark },
+
+  { id: 'jp-1', date: '2026-03-01', time: '14:00', league: 'NPB', sport: 'baseball', homeTeam: teams.giants, awayTeam: teams.swallows, stadium: stadiums.tokyoDome },
+  { id: 'jp-2', date: '2026-03-01', time: '15:00', league: 'J1', sport: 'football', homeTeam: teams.fctokyo, awayTeam: teams.yokohama, stadium: stadiums.ajinomoto },
+  { id: 'jp-3', date: '2026-03-02', time: '18:00', league: 'NPB', sport: 'baseball', homeTeam: teams.hawks, awayTeam: teams.buffaloes, stadium: stadiums.paypay },
+  { id: 'jp-4', date: '2026-03-02', time: '19:00', league: 'J1', sport: 'football', homeTeam: teams.gamba, awayTeam: teams.reds, stadium: stadiums.panasonic },
+  { id: 'jp-5', date: '2026-03-03', time: '14:00', league: 'NPB', sport: 'baseball', homeTeam: teams.marines, awayTeam: teams.giants, stadium: stadiums.marine },
+  { id: 'jp-6', date: '2026-03-03', time: '16:00', league: 'J2', sport: 'football', homeTeam: teams.vegalta, awayTeam: teams.iwata, stadium: stadiums.yurtec },
+  { id: 'jp-7', date: '2026-03-03', time: '19:00', league: 'J1', sport: 'football', homeTeam: teams.reds, awayTeam: teams.fctokyo, stadium: stadiums.saitama }
+];
+
+export function getMetroStadiums(country: 'KR' | 'JP', city: string): Stadium[] {
+  return Object.values(stadiums).filter((stadium) => stadium.country === country && stadium.city === city);
+}
+
+

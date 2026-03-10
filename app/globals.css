@@ -1,0 +1,100 @@
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; font-family: Arial, Helvetica, sans-serif; background: #f5f7fb; color: #111827; }
+button, input { font: inherit; }
+a { color: inherit; }
+
+.pageShell { max-width: 1400px; margin: 0 auto; padding: 24px; }
+.heroCard, .panel { background: #fff; border: 1px solid #e5e7eb; border-radius: 20px; box-shadow: 0 10px 25px rgba(15, 23, 42, 0.05); }
+.heroCard { padding: 28px; margin-bottom: 20px; }
+.heroCard h1 { margin: 6px 0 10px; font-size: 32px; }
+.heroDesc { margin: 0; color: #4b5563; }
+.eyebrow { margin: 0; color: #2563eb; font-weight: 700; }
+
+.contentWithSidebar { display: grid; grid-template-columns: 280px minmax(0, 1fr); gap: 16px; align-items: start; }
+.calendarSidebar { position: sticky; top: 24px; align-self: start; display: grid; gap: 16px; }
+.mainColumn { min-width: 0; }
+.panel { padding: 20px; }
+.panel h2 { margin: 0 0 14px; font-size: 20px; }
+
+.chipRow { display: flex; gap: 10px; flex-wrap: wrap; }
+.chip { background: #eef2ff; color: #334155; border: 1px solid #c7d2fe; padding: 10px 16px; border-radius: 999px; cursor: pointer; }
+.chip.active { background: #1d4ed8; color: #fff; border-color: #1d4ed8; }
+
+.leagueGrid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+.leagueCard { border: 1px solid #dbe4f0; background: #f8fafc; border-radius: 16px; padding: 14px; cursor: pointer; display: flex; flex-direction: column; gap: 10px; align-items: center; justify-content: center; min-height: 128px; }
+.leagueCard.active { border-color: #1d4ed8; background: #eff6ff; }
+.leagueImageWrap { position: relative; width: 140px; height: 46px; }
+.leagueImage { object-fit: contain; }
+.sidebarLeagueGrid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+.leaguePanel .leagueCard { min-height: 88px; padding: 10px 8px; border-radius: 12px; }
+.leaguePanel .leagueImageWrap { width: 100%; height: 56px; }
+
+.calendarHeader { display: flex; justify-content: space-between; align-items: center; gap: 10px; }
+.calendarMove { display: flex; align-items: center; gap: 12px; }
+.calendarMove button { width: 36px; height: 36px; border-radius: 10px; border: 1px solid #d1d5db; background: #fff; cursor: pointer; }
+.weekdayRow, .calendarGrid { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 8px; }
+.weekdayRow { margin: 14px 0 8px; color: #6b7280; text-align: center; font-size: 13px; }
+.dayCell { height: 46px; border-radius: 12px; border: 1px solid #e5e7eb; background: #fff; cursor: pointer; }
+.dayCell.muted { color: #cbd5e1; background: #f8fafc; }
+.dayCell.selected { background: #111827; color: #fff; border-color: #111827; font-weight: 700; }
+.hintText, .mutedText { color: #6b7280; }
+.hintText { margin: 14px 0 0; }
+.calendarPanel { padding: 14px; }
+.calendarPanel h2 { margin-bottom: 8px; font-size: 18px; }
+.calendarPanel .calendarMove { gap: 8px; }
+.calendarPanel .calendarMove button { width: 30px; height: 30px; border-radius: 8px; }
+.calendarPanel .calendarMove strong { font-size: 15px; }
+.calendarPanel .weekdayRow, .calendarPanel .calendarGrid { gap: 6px; }
+.calendarPanel .weekdayRow { margin: 10px 0 6px; font-size: 12px; }
+.calendarPanel .dayCell { height: 36px; border-radius: 10px; }
+.calendarPanel .hintText { margin-top: 10px; font-size: 13px; }
+
+.resultsGrid { display: grid; grid-template-columns: 1.35fr 0.95fr; gap: 16px; }
+.resultsPanel { min-height: 860px; }
+.resultsHeader, .mapHeader { display: flex; justify-content: space-between; gap: 12px; align-items: start; margin-bottom: 12px; }
+.dateGroup + .dateGroup { margin-top: 22px; }
+.dateHeading { display: flex; align-items: baseline; gap: 10px; margin-bottom: 12px; padding-bottom: 8px; border-bottom: 2px solid #e5e7eb; }
+.dateHeading strong { font-size: 24px; }
+.dateHeading span { color: #475569; font-weight: 700; }
+.matchList { display: grid; gap: 12px; }
+.matchCard { width: 100%; text-align: left; border: 2px solid #4f86ff; background: #eef4ff; border-radius: 20px; padding: 14px 24px 10px; cursor: pointer; }
+.matchCard.active { border-color: #2563eb; background: #e8f0ff; }
+.matchCard, .matchCard * { font-size: 11pt !important; }
+.matchHead { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 10px; }
+.leagueMeta { display: flex; align-items: center; gap: 10px; }
+.leagueFlag { font-size: 20px; line-height: 1; }
+.matchSport { font-size: 20px; line-height: 1; }
+.leagueName { font-size: 32px; font-weight: 700; color: #334155; line-height: 1; }
+.matchDateTime { font-size: 32px; font-weight: 700; color: #0f172a; line-height: 1; }
+.matchBodyRow { display: grid; grid-template-columns: 1.2fr 1.4fr auto 1.4fr 1.2fr; align-items: center; gap: 16px; margin-bottom: 8px; }
+.teamNameCell { font-size: 32px; color: #111827; line-height: 1.1; font-weight: 600; }
+.teamNameCell.right { text-align: right; }
+.teamLogoBox { height: 90px; border: 1px solid transparent; background: transparent; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; }
+.teamLogoImage { object-fit: contain; padding: 12px; }
+.teamLogoText { color: #fff; font-size: 30px; font-weight: 700; text-align: center; line-height: 1.2; white-space: pre-line; }
+.vsCenter { font-size: 34px; color: #111827; font-weight: 500; }
+.stadiumLine { margin-top: 0; color: #5a718b; font-size: 26px; font-weight: 600; }
+.focusedLabel { font-size: 14px; padding: 8px 12px; background: #eff6ff; border-radius: 999px; color: #1d4ed8; font-weight: 700; }
+
+.mapCanvas, .mapFallback { width: 100%; min-height: 520px; border-radius: 16px; border: 1px solid #dbe4f0; overflow: hidden; background: #f8fafc; }
+.mapFallback { display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 24px; text-align: center; color: #475569; }
+.checkboxRow { display: flex; align-items: center; gap: 10px; margin-top: 14px; font-weight: 700; }
+.focusDetail { margin-top: 14px; border-top: 1px solid #e5e7eb; padding-top: 14px; display: grid; gap: 6px; }
+.emptyState { border: 1px dashed #cbd5e1; border-radius: 16px; background: #f8fafc; color: #64748b; padding: 20px; text-align: center; }
+.emptyState.small { padding: 18px; }
+
+@media (max-width: 1100px) {
+  .contentWithSidebar { grid-template-columns: 1fr; }
+  .calendarSidebar { position: static; }
+  .calendarPanel { padding: 20px; }
+  .calendarPanel .dayCell { height: 46px; }
+  .sidebarLeagueGrid, .resultsGrid { grid-template-columns: 1fr; }
+  .leagueName { font-size: 22px; }
+  .matchDateTime { font-size: 24px; }
+  .matchBodyRow { grid-template-columns: 1fr; gap: 10px; }
+  .teamNameCell, .teamNameCell.right { font-size: 22px; text-align: left; }
+  .teamLogoBox { height: 100px; }
+  .teamLogoText { font-size: 24px; }
+  .vsCenter { font-size: 24px; justify-self: center; }
+  .stadiumLine { font-size: 20px; }
+}
