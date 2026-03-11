@@ -5,7 +5,7 @@ export const leagues: League[] = [
     code: 'KBO',
     name: 'KBO',
     country: 'KR',
-    imageUrl: 'https://i.namu.wiki/i/2yWff3sZ2zS-we3sWTwj0t1xKdf5l-Pk3hOHkDRV69zPFLcOJXtu67vZ3bla6LnVRjqUV_toxe8AVDfqG0oLlA.svg',
+    imageUrl: 'https://i.namu.wiki/i/WOLl8uEguyCgv6uvxjNp7yn0ACMFByI5KjKbOFF8k2NNWNxrzozfsn20gBaB1F8-ibmIAYvhSYdn1BpJbDG58A.svg',
     officialUrl: 'https://www.koreabaseball.com/'
   },
   {
