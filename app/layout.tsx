@@ -2,8 +2,8 @@ import './globals.css';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: '스포츠 유학 일정 생성기',
-  description: '선택한 날짜만 모아 보여주는 스포츠 경기 일정 + 구글 지도'
+  title: '스포츠 일정 플래너',
+  description: '선택한 날짜의 스포츠 경기 일정과 경기장 정보를 확인하고 관리하는 앱'
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

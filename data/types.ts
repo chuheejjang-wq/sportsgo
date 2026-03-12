@@ -1,5 +1,6 @@
 export type CountryCode = 'KR' | 'JP';
 export type SportType = 'baseball' | 'football';
+export type VenueType = SportType;
 export type LeagueCode = 'KBO' | 'KLEAGUE1' | 'KLEAGUE2' | 'NPB' | 'J1' | 'J2';
 
 export type League = {
@@ -23,6 +24,7 @@ export type Stadium = {
   name: string;
   city: string;
   country: CountryCode;
+  venueType: VenueType;
   lat: number;
   lng: number;
 };

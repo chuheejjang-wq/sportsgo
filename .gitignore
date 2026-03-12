@@ -1,7 +1,10 @@
 node_modules/
 .next/
+out/
 .env.local
 *.tsbuildinfo
+dev.stdout.log
+dev.stderr.log
 
 # OS/editor
 .DS_Store

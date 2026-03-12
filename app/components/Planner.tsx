@@ -2,9 +2,10 @@
 
 import { useEffect, useMemo, useState } from 'react';
 import Image from 'next/image';
-import { games, getMetroStadiums } from '../../data/games';
-import { leagues } from '../../data/leagues';
+import { getMetroStadiums } from '../../data/games';
+import { usePlannerData } from '../../data/plannerStore';
 import { CountryCode, Game, LeagueCode, Stadium } from '../../data/types';
+import AppNav from './AppNav';
 
 declare global {
   interface Window {
@@ -179,22 +180,23 @@ function MapPanel({
 }
 
 export default function Planner() {
-  const [selectedLeagues, setSelectedLeagues] = useState<LeagueCode[]>(() => leagues.map((league) => league.code));
+  const { data } = usePlannerData();
+  const [selectedLeagues, setSelectedLeagues] = useState<LeagueCode[]>(() => data.leagues.map((league) => league.code));
   const [visibleMonth, setVisibleMonth] = useState(new Date(2026, 2, 1));
   const [selectedDates, setSelectedDates] = useState<string[]>(['2026-03-01']);
   const [focusedGameId, setFocusedGameId] = useState<string | null>(null);
   const [showOnlySelectedStadium, setShowOnlySelectedStadium] = useState(false);
 
-  const availableLeagues = leagues;
+  const availableLeagues = data.leagues;
   const leagueByCode = useMemo(() => {
-    return Object.fromEntries(leagues.map((league) => [league.code, league]));
-  }, []);
+    return Object.fromEntries(data.leagues.map((league) => [league.code, league]));
+  }, [data.leagues]);
 
   const filteredGames = useMemo(() => {
-    const result = games.filter((game) => selectedLeagues.includes(game.league) && selectedDates.includes(game.date));
+    const result = data.games.filter((game) => selectedLeagues.includes(game.league) && selectedDates.includes(game.date));
     result.sort((a, b) => `${a.date}${a.time}`.localeCompare(`${b.date}${b.time}`));
     return result;
-  }, [selectedDates, selectedLeagues]);
+  }, [data.games, selectedDates, selectedLeagues]);
 
   const focusedGame = useMemo(
     () => filteredGames.find((game) => game.id === focusedGameId) ?? filteredGames[0] ?? null,
@@ -219,13 +221,13 @@ export default function Planner() {
 
   const activeCountry = useMemo(() => {
     if (focusedGame) return focusedGame.stadium.country;
-    return leagues.find((league) => selectedLeagues.includes(league.code))?.country ?? 'KR';
-  }, [focusedGame, selectedLeagues]);
+    return data.leagues.find((league) => selectedLeagues.includes(league.code))?.country ?? 'KR';
+  }, [data.leagues, focusedGame, selectedLeagues]);
 
   const mapStadiums = useMemo(() => {
     if (!focusedGame) return [];
-    return getMetroStadiums(activeCountry, focusedGame.stadium.city);
-  }, [activeCountry, focusedGame]);
+    return getMetroStadiums(activeCountry, focusedGame.stadium.city, data.stadiums);
+  }, [activeCountry, data.stadiums, focusedGame]);
 
   const monthGrid = useMemo(() => getMonthGrid(visibleMonth), [visibleMonth]);
 
@@ -242,11 +244,13 @@ export default function Planner() {
 
   return (
     <main className="pageShell">
+      <AppNav current="planner" />
+
       <section className="heroCard">
         <div>
           <p className="eyebrow">하루 1경기 기준</p>
           <h1>선택한 날짜만 모아 보여주는 스포츠 일정</h1>
-          <p className="heroDesc">날짜를 눌러 여러 날짜를 고르면, 고른 날짜의 경기만 결과에 표시됩니다.</p>
+          <p className="heroDesc">날짜를 눌러 여러 날짜를 고르면, 고른 날짜의 경기만 결과에 표시됩니다. 어드민에서 수정한 일정과 경기장 정보도 여기서 바로 반영됩니다.</p>
         </div>
       </section>
 
