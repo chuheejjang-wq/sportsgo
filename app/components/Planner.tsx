@@ -183,7 +183,7 @@ export default function Planner() {
   const { data } = usePlannerData();
   const [selectedLeagues, setSelectedLeagues] = useState<LeagueCode[]>(() => data.leagues.map((league) => league.code));
   const [visibleMonth, setVisibleMonth] = useState(new Date(2026, 2, 1));
-  const [selectedDates, setSelectedDates] = useState<string[]>(['2026-03-01']);
+  const [selectedDates, setSelectedDates] = useState<string[]>(['2026-03-28']);
   const [focusedGameId, setFocusedGameId] = useState<string | null>(null);
   const [showOnlySelectedStadium, setShowOnlySelectedStadium] = useState(false);
 

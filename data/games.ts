@@ -1,14 +1,16 @@
-import { Game, Team, Stadium } from './types';
+import { Team, Stadium } from './types';
 
 export const teams: Record<string, Team> = {
   lg: { id: 'lg', name: 'LG 트윈스', shortName: 'LG', sport: 'baseball', logoUrl: 'https://i.namu.wiki/i/LoA0ZroRYN-YPAFpexdNtzpOSUSOeXarEB7j0VYrJfcUmiaMXgBAgwcQFF_f_oYG9YqjD-uxTLrPbpdYM_me9bjgXcKknewKkcXjIg5ByUHai3X0FQpJ3ToEQQwoUkv0Go_7YKI8qdBbRPHScmuTow.svg' },
   doosan: { id: 'doosan', name: '두산 베어스', shortName: '두산', sport: 'baseball', logoUrl: 'https://i.namu.wiki/i/IVpN43DBlDGvxSnwALGcUIMdHJjRgivrAjV6SqSO7q8-atsaiiLVQ5lW7saCW3mcl5YaK2n41ZDqVV4gTwDKRaUoPOoRjq4KIqsXVmKahJtv2Y3woRCjlaTeHzIAVolNX1-0IyqrklwsjY5BJ0TpRw.svg' },
   kiwoom: { id: 'kiwoom', name: '키움 히어로즈', shortName: '키움', sport: 'baseball', logoUrl: 'https://i.namu.wiki/i/q-THPUhA0WbkGPgdpLWV9cSBkJVKszjTPIz5jDfr1_V0q6nVvn4dYXDXFO48sTnEPjUMzGjk4UppBTllaVGJsTefY8NDNtDqgHHgxIs2ZIeKpsEpeoNf55dIDISEyzAbm4v-u0zR1dDTj_G3e2l0gA.svg' },
   ssg: { id: 'ssg', name: 'SSG 랜더스', shortName: 'SSG', sport: 'baseball', logoUrl: 'https://i.namu.wiki/i/CNWmnRx0aRD54ckCuFx7zWEp_Mwh5ACCbsxzE0c9j6zlN-lQYIDnVpvWorZOH7HU1Gc3IOWNFfs85H1hl5yApHJNAUILus6H4DXqxTxB1NZt1u4-vBrpbGD9MXYtOFC9Hh4HJPyt__csWW3nS-k6Vw.svg' },
+  kt: { id: 'kt', name: 'KT 위즈', shortName: 'KT', sport: 'baseball',logoUrl:'https://i.namu.wiki/i/gh22VFVgaHO9zs6qFsI5IBU0xIDZ9DkBAOTt_za7wGLLEruHNvc828-V8WfK1dFPzTsDbE4yM3ShlCbx8BdvrQ.svg' },
   hanwha: { id: 'hanwha', name: '한화 이글스', shortName: '한화', sport: 'baseball', logoUrl: 'https://i.namu.wiki/i/SClxRdu23u7HAWnY1y7hX-ZW7P57UN07ApPX5ZVkd2NS6bl28dnJLx2aR1A3rndDTO3MJOcD1143JMjUCRXCaA.svg' },
   lotte: { id: 'lotte', name: '롯데 자이언츠', shortName: '롯데', sport: 'baseball', logoUrl: 'https://i.namu.wiki/i/0-xM-7gO5Y0SX6yOQqY0mjCUcBIdGLnMoyj8940IE_Z4LRenD0AoKcBe535tYNyVFaE0xhBrOmAaC8yvHDSrKimRtr_kCDRHEQXPsFuzHgH8pEEEaRRl8kbi76fCbMBRh6oE0qMM6GHZmSGWmbz5IQ.svg' },
   samsung: { id: 'samsung', name: '삼성 라이온즈', shortName: '삼성', sport: 'baseball', logoUrl: 'https://i.namu.wiki/i/H8oFAQ4UwXJKPKBeRCugv7CfWC9-hu8oMqI25ojFRfSomvZ4cJ3AfOs0RNf__XpgIdT5n3PGKicMqI23X0EWJ7CMfUsR_AMfKpypnJ4Fcwj4VQTIfbkGNBjuFAktvS1K9OkZU18VPgJGBg0-qczpag.svg' },
   kia: { id: 'kia', name: 'KIA 타이거즈', shortName: 'KIA', sport: 'baseball', logoUrl: 'https://i.namu.wiki/i/r02h_UhZzYr7uf-x1LKOQ2oGH2Yu6Sme8n1cF8wUCesSFzoglMAXFWAMaGqxxTcslSYIQD6GWA8rXpH9ZypzTyyB_6cfw_7AamXFu9g9GtaSDzrgR4E0pBdrlAA7VCqYAIKw4ermcQugi74wLwmF2w.svg' },
+  nc: { id: 'nc', name: 'NC 다이노스', shortName: 'NC', sport: 'baseball',logoUrl:'https://i.namu.wiki/i/sTaLa3_ftiXKcY-RSWYe2n5hE7eSdUKgw4krDr5sMwKBLi-Kmd6BvTP7Tc2ea5eY3cZPMvXxLukGu-U2ELz3CFbdNp9TPcSWUvwO113ezuWCfTkuBNL7TrViLlfB9Z4k4jJa5zHSqndugTMeAR-uoQ.svg' },
 
   gangwon: { id: 'gangwon', name: '강원 FC', shortName: '강원', sport: 'football', logoUrl: 'https://i.namu.wiki/i/XCZWcSbLcDtYOVRYzaFTK50pVt4CGXFQxV6aMp-0hbHceF7ceUOJFrgquo90pAvklQmpncOVgbQoS-AUd_XKvhbpubEdqfzlT5wCedAf5dRnpyMPcXI-s2Y2nHowi5Vi5xF5ptzsm_q8yNWZvBXCIQ.svg' },
   gwangju: { id: 'gwangju', name: '광주 FC', shortName: '광주', sport: 'football', logoUrl: 'https://i.namu.wiki/i/JJpXR7ibmpBQfGYhE8M6_Yc_PDToVgD4glYnRgS1qvVFHEfM-RRERPdr4Wwnl2PDTxIY83hHKUTnwtXzB3BW-7RvZnw2OHPR504dRgkTGUJLa3ZXNMGYhrgAaqQ9fHV3LRrUzaCqd06PviqSKx20LQ.svg' },
@@ -80,8 +82,10 @@ export const stadiums: Record<string, Stadium> = {
   gwangjuFootballStadium: { id: 'gwangjuFootballStadium', name: '광주축구전용구장', city: '광주', country: 'KR', venueType: 'football', lat: 35.1601, lng: 126.8762 },
   gimcheonSportsComplex: { id: 'gimcheonSportsComplex', name: '김천종합운동장', city: '김천', country: 'KR', venueType: 'football', lat: 36.1399, lng: 128.1136 },
   daejeonWorldCup: { id: 'daejeonWorldCup', name: '대전월드컵경기장', city: '대전', country: 'KR', venueType: 'football', lat: 36.366, lng: 127.3244 },
+  incheonLanders: { id: 'incheonLanders', name: '인천 SSG 랜더스필드', city: '인천', country: 'KR', venueType: 'baseball', lat: 37.4369, lng: 126.6933 },
   incheonFootballStadium: { id: 'incheonFootballStadium', name: '인천축구전용경기장', city: '인천', country: 'KR', venueType: 'football', lat: 37.4661, lng: 126.6431 },
   jejuWorldCup: { id: 'jejuWorldCup', name: '제주월드컵경기장', city: '서귀포', country: 'KR', venueType: 'football', lat: 33.2461, lng: 126.5092 },
+  changwonNcPark: { id: 'changwonNcPark', name: '창원NC파크', city: '창원', country: 'KR', venueType: 'baseball', lat: 35.2226, lng: 128.5828 },
   changwonFootballCenter: { id: 'changwonFootballCenter', name: '창원축구센터', city: '창원', country: 'KR', venueType: 'football', lat: 35.2222, lng: 128.5806 },
   gimpoSalter: { id: 'gimpoSalter', name: '김포솔터축구장', city: '김포', country: 'KR', venueType: 'football', lat: 37.6423, lng: 126.6768 },
   gimhaeSports: { id: 'gimhaeSports', name: '김해종합운동장', city: '김해', country: 'KR', venueType: 'football', lat: 35.2273, lng: 128.8894 },
@@ -109,99 +113,6 @@ export const stadiums: Record<string, Stadium> = {
   ecopa: { id: 'ecopa', name: '시즈오카 스타디움 에코파', city: '시즈오카', country: 'JP', venueType: 'football', lat: 34.7457, lng: 137.9694 },
   kyocera: { id: 'kyocera', name: '교세라 돔 오사카', city: '오사카', country: 'JP', venueType: 'baseball', lat: 34.66935, lng: 135.47601 }
 };
-
-const baseGames: Game[] = [
-  { id: 'kr-1', date: '2026-03-01', time: '14:00', league: 'KBO', sport: 'baseball', homeTeam: teams.lg, awayTeam: teams.doosan, stadium: stadiums.jamsil },
-  { id: 'kr-2', date: '2026-03-01', time: '14:00', league: 'KBO', sport: 'baseball', homeTeam: teams.kiwoom, awayTeam: teams.ssg, stadium: stadiums.gocheok },
-  { id: 'kr-3', date: '2026-03-01', time: '16:30', league: 'KLEAGUE1', sport: 'football', homeTeam: teams.seoul, awayTeam: teams.ulsan, stadium: stadiums.seoulWorldCup },
-  { id: 'kr-4', date: '2026-03-01', time: '16:30', league: 'KLEAGUE1', sport: 'football', homeTeam: teams.suwonfc, awayTeam: teams.daegu, stadium: stadiums.suwonSports },
-  { id: 'kr-5', date: '2026-03-02', time: '18:30', league: 'KBO', sport: 'baseball', homeTeam: teams.hanwha, awayTeam: teams.samsung, stadium: stadiums.daejeonBaseball },
-  { id: 'kr-6', date: '2026-03-02', time: '19:00', league: 'KBO', sport: 'baseball', homeTeam: teams.lotte, awayTeam: teams.kia, stadium: stadiums.sajik },
-  { id: 'kr-7', date: '2026-03-02', time: '19:30', league: 'KLEAGUE1', sport: 'football', homeTeam: teams.jeonbuk, awayTeam: teams.pohang, stadium: stadiums.dgbank },
-  { id: 'kr-8', date: '2026-03-02', time: '19:30', league: 'KLEAGUE2', sport: 'football', homeTeam: teams.busan, awayTeam: teams.jeonnam, stadium: stadiums.busanAsiad },
-  { id: 'kr-9', date: '2026-03-03', time: '14:00', league: 'KBO', sport: 'baseball', homeTeam: teams.kia, awayTeam: teams.samsung, stadium: stadiums.gwangjuChamp },
-  { id: 'kr-10', date: '2026-03-03', time: '16:30', league: 'KLEAGUE2', sport: 'football', homeTeam: teams.anyang, awayTeam: teams.seoulE, stadium: stadiums.anyangStadium },
-  { id: 'kr-11', date: '2026-03-03', time: '18:00', league: 'KLEAGUE1', sport: 'football', homeTeam: teams.daegu, awayTeam: teams.suwonfc, stadium: stadiums.dgbPark },
-
-  { id: 'jp-1', date: '2026-03-01', time: '14:00', league: 'NPB', sport: 'baseball', homeTeam: teams.giants, awayTeam: teams.swallows, stadium: stadiums.tokyoDome },
-  { id: 'jp-2', date: '2026-03-01', time: '15:00', league: 'J1', sport: 'football', homeTeam: teams.fctokyo, awayTeam: teams.yokohama, stadium: stadiums.ajinomoto },
-  { id: 'jp-3', date: '2026-03-02', time: '18:00', league: 'NPB', sport: 'baseball', homeTeam: teams.hawks, awayTeam: teams.buffaloes, stadium: stadiums.paypay },
-  { id: 'jp-4', date: '2026-03-02', time: '19:00', league: 'J1', sport: 'football', homeTeam: teams.gamba, awayTeam: teams.reds, stadium: stadiums.panasonic },
-  { id: 'jp-5', date: '2026-03-03', time: '14:00', league: 'NPB', sport: 'baseball', homeTeam: teams.marines, awayTeam: teams.giants, stadium: stadiums.marine },
-  { id: 'jp-6', date: '2026-03-03', time: '16:00', league: 'J2', sport: 'football', homeTeam: teams.vegalta, awayTeam: teams.iwata, stadium: stadiums.yurtec },
-  { id: 'jp-7', date: '2026-03-03', time: '19:00', league: 'J1', sport: 'football', homeTeam: teams.reds, awayTeam: teams.fctokyo, stadium: stadiums.saitama }
-];
-
-const marchFridayToMondayDates = [
-  '2026-03-01',
-  '2026-03-02',
-  '2026-03-06',
-  '2026-03-07',
-  '2026-03-08',
-  '2026-03-09',
-  '2026-03-13',
-  '2026-03-14',
-  '2026-03-15',
-  '2026-03-16',
-  '2026-03-20',
-  '2026-03-21',
-  '2026-03-22',
-  '2026-03-23',
-  '2026-03-27',
-  '2026-03-28',
-  '2026-03-29',
-  '2026-03-30'
-] as const;
-
-const sampleSchedules: Record<string, Array<{ time: string; homeTeam: Team; awayTeam: Team; stadium: Stadium; sport: Game['sport'] }>> = {
-  KBO: [
-    { time: '14:00', homeTeam: teams.lg, awayTeam: teams.doosan, stadium: stadiums.jamsil, sport: 'baseball' },
-    { time: '14:00', homeTeam: teams.kiwoom, awayTeam: teams.ssg, stadium: stadiums.gocheok, sport: 'baseball' },
-    { time: '18:30', homeTeam: teams.hanwha, awayTeam: teams.samsung, stadium: stadiums.daejeonBaseball, sport: 'baseball' }
-  ],
-  KLEAGUE1: [
-    { time: '16:30', homeTeam: teams.seoul, awayTeam: teams.ulsan, stadium: stadiums.seoulWorldCup, sport: 'football' },
-    { time: '19:30', homeTeam: teams.jeonbuk, awayTeam: teams.pohang, stadium: stadiums.dgbank, sport: 'football' },
-    { time: '16:30', homeTeam: teams.gwangju, awayTeam: teams.gangwon, stadium: stadiums.gwangjuFootballStadium, sport: 'football' }
-  ],
-  KLEAGUE2: [
-    { time: '16:30', homeTeam: teams.anyang, awayTeam: teams.seoulE, stadium: stadiums.anyangStadium, sport: 'football' },
-    { time: '19:30', homeTeam: teams.busan, awayTeam: teams.jeonnam, stadium: stadiums.busanAsiad, sport: 'football' },
-    { time: '16:30', homeTeam: teams.gimpo, awayTeam: teams.chungnamAsan, stadium: stadiums.gimpoSalter, sport: 'football' }
-  ],
-  NPB: [
-    { time: '14:00', homeTeam: teams.giants, awayTeam: teams.swallows, stadium: stadiums.tokyoDome, sport: 'baseball' },
-    { time: '18:00', homeTeam: teams.hawks, awayTeam: teams.buffaloes, stadium: stadiums.paypay, sport: 'baseball' },
-    { time: '18:00', homeTeam: teams.swallows, awayTeam: teams.marines, stadium: stadiums.jingu, sport: 'baseball' }
-  ],
-  J1: [
-    { time: '15:00', homeTeam: teams.fctokyo, awayTeam: teams.yokohama, stadium: stadiums.ajinomoto, sport: 'football' },
-    { time: '19:00', homeTeam: teams.gamba, awayTeam: teams.reds, stadium: stadiums.panasonic, sport: 'football' },
-    { time: '19:00', homeTeam: teams.reds, awayTeam: teams.fctokyo, stadium: stadiums.saitama, sport: 'football' }
-  ],
-  J2: [
-    { time: '16:00', homeTeam: teams.vegalta, awayTeam: teams.iwata, stadium: stadiums.yurtec, sport: 'football' },
-    { time: '14:00', homeTeam: teams.iwata, awayTeam: teams.vegalta, stadium: stadiums.ecopa, sport: 'football' },
-    { time: '18:00', homeTeam: teams.vegalta, awayTeam: teams.iwata, stadium: stadiums.yurtec, sport: 'football' }
-  ]
-};
-
-const generatedMarchGames: Game[] = marchFridayToMondayDates.flatMap((date) =>
-  Object.entries(sampleSchedules).flatMap(([league, fixtures]) =>
-    fixtures.map((fixture, index) => ({
-      id: `sample-${league.toLowerCase()}-${date}-${index + 1}`,
-      date,
-      time: fixture.time,
-      league: league as Game['league'],
-      sport: fixture.sport,
-      homeTeam: fixture.homeTeam,
-      awayTeam: fixture.awayTeam,
-      stadium: fixture.stadium
-    }))
-  )
-);
-
-export const games: Game[] = [...baseGames, ...generatedMarchGames];
 
 export function getMetroStadiums(country: 'KR' | 'JP', city: string, stadiumSource: Stadium[] = Object.values(stadiums)): Stadium[] {
   return stadiumSource.filter((stadium) => stadium.country === country && stadium.city === city);

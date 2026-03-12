@@ -1,11 +1,12 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { games as seedGames, stadiums as seedStadiumMap } from './games';
+import { stadiums as seedStadiumMap } from './games';
 import { leagues as seedLeagues } from './leagues';
+import { games as seedGames } from './schedules';
 import { Game, League, Stadium } from './types';
 
-const STORAGE_KEY = 'sportsgo-admin-data-v1';
+const STORAGE_KEY = 'sportsgo-admin-data-v2';
 const STORAGE_EVENT = 'sportsgo-admin-data-updated';
 
 export type PlannerData = {
