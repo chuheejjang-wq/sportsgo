@@ -186,17 +186,30 @@ export default function Planner() {
   const [selectedDates, setSelectedDates] = useState<string[]>(['2026-03-28']);
   const [focusedGameId, setFocusedGameId] = useState<string | null>(null);
   const [showOnlySelectedStadium, setShowOnlySelectedStadium] = useState(false);
+  const [isMobileViewport, setIsMobileViewport] = useState(false);
+  const [isCalendarOpen, setIsCalendarOpen] = useState(true);
 
   const availableLeagues = data.leagues;
   const leagueByCode = useMemo(() => {
     return Object.fromEntries(data.leagues.map((league) => [league.code, league]));
   }, [data.leagues]);
+  const leagueOrder = useMemo(() => {
+    return Object.fromEntries(data.leagues.map((league, index) => [league.code, index]));
+  }, [data.leagues]);
 
   const filteredGames = useMemo(() => {
     const result = data.games.filter((game) => selectedLeagues.includes(game.league) && selectedDates.includes(game.date));
-    result.sort((a, b) => `${a.date}${a.time}`.localeCompare(`${b.date}${b.time}`));
+    result.sort((a, b) => {
+      const dateCompare = a.date.localeCompare(b.date);
+      if (dateCompare !== 0) return dateCompare;
+
+      const leagueCompare = (leagueOrder[a.league] ?? Number.MAX_SAFE_INTEGER) - (leagueOrder[b.league] ?? Number.MAX_SAFE_INTEGER);
+      if (leagueCompare !== 0) return leagueCompare;
+
+      return a.time.localeCompare(b.time);
+    });
     return result;
-  }, [data.games, selectedDates, selectedLeagues]);
+  }, [data.games, leagueOrder, selectedDates, selectedLeagues]);
 
   const focusedGame = useMemo(
     () => filteredGames.find((game) => game.id === focusedGameId) ?? filteredGames[0] ?? null,
@@ -211,6 +224,22 @@ export default function Planner() {
       setFocusedGameId(filteredGames[0]?.id ?? null);
     }
   }, [filteredGames, focusedGame, focusedGameId]);
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+
+    const mediaQuery = window.matchMedia('(max-width: 767px)');
+    const syncViewport = (event?: MediaQueryListEvent) => {
+      const matches = event?.matches ?? mediaQuery.matches;
+      setIsMobileViewport(matches);
+      setIsCalendarOpen(matches ? false : true);
+    };
+
+    syncViewport();
+    mediaQuery.addEventListener('change', syncViewport);
+
+    return () => mediaQuery.removeEventListener('change', syncViewport);
+  }, []);
 
   const groupedByDate = useMemo(() => {
     return selectedDates
@@ -248,9 +277,9 @@ export default function Planner() {
 
       <section className="heroCard">
         <div>
-          <p className="eyebrow">하루 1경기 기준</p>
-          <h1>선택한 날짜만 모아 보여주는 스포츠 일정</h1>
-          <p className="heroDesc">날짜를 눌러 여러 날짜를 고르면, 고른 날짜의 경기만 결과에 표시됩니다. 어드민에서 수정한 일정과 경기장 정보도 여기서 바로 반영됩니다.</p>
+          <p className="eyebrow">KBO, NPB, K1, J1</p>
+          <h1>모아 보자 스포츠</h1>
+          <p className="heroDesc">여러 날짜 클릭, 해당 날짜의 경기만 결과에 표시됩니다. </p>
         </div>
       </section>
 
@@ -271,27 +300,41 @@ export default function Planner() {
                 </button>
               </div>
             </div>
-            <div className="weekdayRow">
-              {['일', '월', '화', '수', '목', '금', '토'].map((label) => (
-                <span key={label}>{label}</span>
-              ))}
+            <div className={`calendarBody ${isCalendarOpen ? 'open' : 'collapsed'}`}>
+              <div className="weekdayRow">
+                {['일', '월', '화', '수', '목', '금', '토'].map((label) => (
+                  <span key={label}>{label}</span>
+                ))}
+              </div>
+              <div className="calendarGrid">
+                {monthGrid.map((cell) => {
+                  const iso = toISO(cell.date);
+                  const selected = selectedDates.includes(iso);
+                  return (
+                    <button
+                      key={cell.key}
+                      className={`dayCell ${cell.inMonth ? '' : 'muted'} ${selected ? 'selected' : ''}`}
+                      onClick={() => toggleDate(iso)}
+                    >
+                      {cell.date.getDate()}
+                    </button>
+                  );
+                })}
+              </div>
+              <p className="hintText">선택한 날짜 수: {selectedDates.length}</p>
             </div>
-            <div className="calendarGrid">
-              {monthGrid.map((cell) => {
-                const iso = toISO(cell.date);
-                const selected = selectedDates.includes(iso);
-                return (
-                  <button
-                    key={cell.key}
-                    className={`dayCell ${cell.inMonth ? '' : 'muted'} ${selected ? 'selected' : ''}`}
-                    onClick={() => toggleDate(iso)}
-                  >
-                    {cell.date.getDate()}
-                  </button>
-                );
-              })}
+            <div className="calendarToggleWrap">
+              <button
+                type="button"
+                className="calendarToggleButton"
+                onClick={() => setIsCalendarOpen((prev) => !prev)}
+                aria-expanded={isCalendarOpen}
+                aria-label={isCalendarOpen ? '달력 접기' : '달력 펼치기'}
+              >
+                {isCalendarOpen ? '▲' : '▼'}
+              </button>
             </div>
-            <p className="hintText">선택한 날짜 수: {selectedDates.length}</p>
+            {isMobileViewport && !isCalendarOpen ? <p className="hintText compactHint">선택한 날짜 수: {selectedDates.length}</p> : null}
           </div>
 
           <div className="panel leaguePanel">
@@ -319,7 +362,7 @@ export default function Planner() {
               <div className="resultsHeader">
                 <div>
                   <h2>검색 결과</h2>
-                  <p className="mutedText">선택한 날짜별로 경기를 묶어서 보여줍니다.</p>
+                  <p className="mutedText"></p>
                 </div>
               </div>
 
@@ -349,28 +392,15 @@ export default function Planner() {
                               <span className="matchSport">{sportEmoji[game.sport]}</span>
                               <span className="leagueName">{leagueByCode[game.league].name}</span>
                             </div>
-                            <span className="matchDateTime">{formatShortDate(game.date)} {game.time}</span>
+                            <div className="stadiumLine stadiumLineTop">{game.stadium.name}</div>
+                            <span className="matchDateTime">{game.time}</span>
                           </div>
-                          <div className="matchBodyRow">
+
+                          <div className="matchBodyRow compact">
                             <div className="teamNameCell">{game.homeTeam.shortName}</div>
-                            <div className="teamLogoBox">
-                              {game.homeTeam.logoUrl ? (
-                                <Image src={game.homeTeam.logoUrl} alt={`${game.homeTeam.shortName} logo`} fill sizes="160px" className="teamLogoImage" />
-                              ) : (
-                                <span className="teamLogoText">홈팀 로고</span>
-                              )}
-                            </div>
                             <span className="vsCenter">VS</span>
-                            <div className="teamLogoBox">
-                              {game.awayTeam.logoUrl ? (
-                                <Image src={game.awayTeam.logoUrl} alt={`${game.awayTeam.shortName} logo`} fill sizes="160px" className="teamLogoImage" />
-                              ) : (
-                                <span className="teamLogoText">원정팀 로고</span>
-                              )}
-                            </div>
                             <div className="teamNameCell right">{game.awayTeam.shortName}</div>
                           </div>
-                          <div className="stadiumLine">{game.stadium.name}</div>
                         </button>
                       ))}
                     </div>
@@ -383,7 +413,7 @@ export default function Planner() {
               <div className="mapHeader">
                 <div>
                   <h2>지도</h2>
-                  <p className="mutedText">경기를 선택하면 해당 지역 중심으로 지도를 이동합니다.</p>
+                  <p className="mutedText"></p>
                 </div>
                 {focusedGame && <div className="focusedLabel">현재 선택: {focusedGame.stadium.city}</div>}
               </div>

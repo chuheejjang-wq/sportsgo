@@ -35,9 +35,19 @@ function cloneGame(game: Game): Game {
 }
 
 function buildSeedData(): PlannerData {
+  const scheduleStadiums = seedGames.map((game) => cloneStadium(game.stadium));
+  const mergedStadiums = Array.from(
+    new Map(
+      [...Object.values(seedStadiumMap).map(cloneStadium), ...scheduleStadiums].map((stadium) => [
+        stadium.id,
+        stadium
+      ])
+    ).values()
+  );
+
   return {
     leagues: seedLeagues.map(cloneLeague),
-    stadiums: Object.values(seedStadiumMap).map(cloneStadium),
+    stadiums: mergedStadiums,
     games: seedGames.map(cloneGame)
   };
 }
