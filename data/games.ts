@@ -91,7 +91,7 @@ export const stadiums: Record<string, Stadium> = {
   gimhaeSports: { id: 'gimhaeSports', name: '김해종합운동장', city: '김해', country: 'KR', venueType: 'football', lat: 35.2273, lng: 128.8894 },
   tancheon: { id: 'tancheon', name: '탄천종합운동장', city: '성남', country: 'KR', venueType: 'football', lat: 37.4101, lng: 127.1294 },
   suwonWorldCup: { id: 'suwonWorldCup', name: '수원월드컵경기장', city: '수원', country: 'KR', venueType: 'football', lat: 37.2868, lng: 127.0369 },
-  ansanWa: { id: 'ansanWa', name: '안산 와~스타디움', city: '안산', country: 'KR', venueType: 'football', lat: 37.3214, lng: 126.8307 },
+  ansanWa: { id: 'ansanWa', name: '안산 와스타디움', city: '안산', country: 'KR', venueType: 'football', lat: 37.3214, lng: 126.8307 },
   yonginMireu: { id: 'yonginMireu', name: '용인미르스타디움', city: '용인', country: 'KR', venueType: 'football', lat: 37.1459, lng: 127.1776 },
   gwangyangFootball: { id: 'gwangyangFootball', name: '광양축구전용구장', city: '광양', country: 'KR', venueType: 'football', lat: 34.9405, lng: 127.6958 },
   yiSunShin: { id: 'yiSunShin', name: '이순신종합운동장', city: '아산', country: 'KR', venueType: 'football', lat: 36.7698, lng: 127.0155 },

@@ -50,7 +50,7 @@ const defaultHomeStadiumByTeamId: Record<string, Stadium> = {
   },
   carp: {
     id: 'mazdaStadium',
-    name: 'MAZDA Zoom-Zoom 스타디움 히로시마',
+    name: 'MAZDA 스타디움',
     city: '히로시마',
     country: 'JP',
     venueType: 'baseball',
@@ -68,7 +68,7 @@ const defaultHomeStadiumByTeamId: Record<string, Stadium> = {
   },
   eagles: {
     id: 'rakutenMobilePark',
-    name: '라쿠텐 모바일 파크 미야기',
+    name: '라쿠텐 파크 미야기',
     city: '센다이',
     country: 'JP',
     venueType: 'baseball',

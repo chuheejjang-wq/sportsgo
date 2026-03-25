@@ -285,20 +285,22 @@ export default function Planner() {
 
       <section className="contentWithSidebar">
         <aside className="calendarSidebar">
-          <div className="panel calendarPanel">
+          <div className={`panel calendarPanel ${isMobileViewport && !isCalendarOpen ? 'compact' : ''}`}>
             <div className="calendarHeader">
               <h2>달력</h2>
-              <div className="calendarMove">
-                <button onClick={() => setVisibleMonth(new Date(visibleMonth.getFullYear(), visibleMonth.getMonth() - 1, 1))}>
-                  {'<'}
-                </button>
-                <strong>
-                  {visibleMonth.getFullYear()}년 {visibleMonth.getMonth() + 1}월
-                </strong>
-                <button onClick={() => setVisibleMonth(new Date(visibleMonth.getFullYear(), visibleMonth.getMonth() + 1, 1))}>
-                  {'>'}
-                </button>
-              </div>
+              {!isMobileViewport || isCalendarOpen ? (
+                <div className="calendarMove">
+                  <button onClick={() => setVisibleMonth(new Date(visibleMonth.getFullYear(), visibleMonth.getMonth() - 1, 1))}>
+                    {'<'}
+                  </button>
+                  <strong>
+                    {visibleMonth.getFullYear()}년 {visibleMonth.getMonth() + 1}월
+                  </strong>
+                  <button onClick={() => setVisibleMonth(new Date(visibleMonth.getFullYear(), visibleMonth.getMonth() + 1, 1))}>
+                    {'>'}
+                  </button>
+                </div>
+              ) : null}
             </div>
             <div className={`calendarBody ${isCalendarOpen ? 'open' : 'collapsed'}`}>
               <div className="weekdayRow">
@@ -334,7 +336,6 @@ export default function Planner() {
                 {isCalendarOpen ? '▲' : '▼'}
               </button>
             </div>
-            {isMobileViewport && !isCalendarOpen ? <p className="hintText compactHint">선택한 날짜 수: {selectedDates.length}</p> : null}
           </div>
 
           <div className="panel leaguePanel">
@@ -386,21 +387,59 @@ export default function Planner() {
                             setShowOnlySelectedStadium(false);
                           }}
                         >
-                          <div className="matchHead">
-                            <div className="leagueMeta">
-                              <span className="leagueFlag">{countryFlag(leagueByCode[game.league].country)}</span>
-                              <span className="matchSport">{sportEmoji[game.sport]}</span>
-                              <span className="leagueName">{leagueByCode[game.league].name}</span>
-                            </div>
-                            <div className="stadiumLine stadiumLineTop">{game.stadium.name}</div>
-                            <span className="matchDateTime">{game.time}</span>
-                          </div>
+                          {isMobileViewport ? (
+                            <div className="matchCardMobile">
+                              <div className="leagueMeta mobileLeagueMeta">
+                                <span className="leagueFlag">{countryFlag(leagueByCode[game.league].country)}</span>
+                                <span className="matchSport">{sportEmoji[game.sport]}</span>
+                                <span className="leagueName">{leagueByCode[game.league].name}</span>
+                              </div>
 
-                          <div className="matchBodyRow compact">
-                            <div className="teamNameCell">{game.homeTeam.shortName}</div>
-                            <span className="vsCenter">VS</span>
-                            <div className="teamNameCell right">{game.awayTeam.shortName}</div>
-                          </div>
+                              <div className="mobileInfoBox mobileStadiumBox">{game.stadium.name}</div>
+
+                              <div className="mobileTeamLogoBox mobileHomeLogoBox">
+                                {game.homeTeam.logoUrl ? (
+                                  <Image src={game.homeTeam.logoUrl} alt={game.homeTeam.name} fill sizes="80px" className="teamLogoImage" />
+                                ) : (
+                                  <span className="teamLogoFallback">Home</span>
+                                )}
+                              </div>
+
+                              <span className="mobileVsCenter">VS</span>
+
+                              <div className="mobileTeamLogoBox mobileAwayLogoBox">
+                                {game.awayTeam.logoUrl ? (
+                                  <Image src={game.awayTeam.logoUrl} alt={game.awayTeam.name} fill sizes="80px" className="teamLogoImage" />
+                                ) : (
+                                  <span className="teamLogoFallback">Away</span>
+                                )}
+                              </div>
+
+                              <div className="mobileInfoBox mobileTimeBox">{game.time}</div>
+
+                              <div className="mobileTeamNamePill mobileHomeName">{game.homeTeam.shortName}</div>
+
+                              <div className="mobileTeamNamePill mobileAwayName">{game.awayTeam.shortName}</div>
+                            </div>
+                          ) : (
+                            <>
+                              <div className="matchHead">
+                                <div className="leagueMeta">
+                                  <span className="leagueFlag">{countryFlag(leagueByCode[game.league].country)}</span>
+                                  <span className="matchSport">{sportEmoji[game.sport]}</span>
+                                  <span className="leagueName">{leagueByCode[game.league].name}</span>
+                                </div>
+                                <div className="stadiumLine stadiumLineTop">{game.stadium.name}</div>
+                                <span className="matchDateTime">{game.time}</span>
+                              </div>
+
+                              <div className="matchBodyRow compact">
+                                <div className="teamNameCell">{game.homeTeam.shortName}</div>
+                                <span className="vsCenter">VS</span>
+                                <div className="teamNameCell right">{game.awayTeam.shortName}</div>
+                              </div>
+                            </>
+                          )}
                         </button>
                       ))}
                     </div>
