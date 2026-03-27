@@ -2,8 +2,8 @@ import rawSchedule from './j2_j3_league_schedule.json';
 import {
   buildFootballGames,
   fillUnknownJLeagueRows,
-  jLeagueStadiumLookup,
-  jLeagueTeamLookup
+  j2J3StadiumLookup,
+  j2J3TeamLookup
 } from './shared';
 import { Game } from '../types';
 
@@ -17,6 +17,6 @@ export const j2Games: Game[] = buildFootballGames(
   fillUnknownJLeagueRows((rawSchedule as { matches: JLeagueRow[] }).matches),
   'J2',
   'JP',
-  jLeagueTeamLookup,
-  jLeagueStadiumLookup
+  j2J3TeamLookup,
+  j2J3StadiumLookup
 );

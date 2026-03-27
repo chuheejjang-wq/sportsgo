@@ -1,6 +1,6 @@
 ﻿'use client';
 
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import Image from 'next/image';
 import { getMetroStadiums } from '../../data/games';
 import { usePlannerData } from '../../data/plannerStore';
@@ -181,6 +181,10 @@ function MapPanel({
 
 export default function Planner() {
   const { data } = usePlannerData();
+  const sidebarRef = useRef<HTMLElement | null>(null);
+  const mobileFilterPanelRef = useRef<HTMLDivElement | null>(null);
+  const resultsGridRef = useRef<HTMLElement | null>(null);
+  const wasCompactRef = useRef(false);
   const [selectedLeagues, setSelectedLeagues] = useState<LeagueCode[]>(() => data.leagues.map((league) => league.code));
   const [visibleMonth, setVisibleMonth] = useState(new Date(2026, 2, 1));
   const [selectedDates, setSelectedDates] = useState<string[]>(['2026-03-28']);
@@ -188,6 +192,8 @@ export default function Planner() {
   const [showOnlySelectedStadium, setShowOnlySelectedStadium] = useState(false);
   const [isMobileViewport, setIsMobileViewport] = useState(false);
   const [isCalendarOpen, setIsCalendarOpen] = useState(true);
+  const [isStickyCompact, setIsStickyCompact] = useState(false);
+  const [mobileFilterMetrics, setMobileFilterMetrics] = useState({ height: 0, left: 0, width: 0 });
 
   const availableLeagues = data.leagues;
   const leagueByCode = useMemo(() => {
@@ -232,7 +238,9 @@ export default function Planner() {
     const syncViewport = (event?: MediaQueryListEvent) => {
       const matches = event?.matches ?? mediaQuery.matches;
       setIsMobileViewport(matches);
-      setIsCalendarOpen(matches ? false : true);
+      setIsCalendarOpen(true);
+      setIsStickyCompact(false);
+      wasCompactRef.current = false;
     };
 
     syncViewport();
@@ -240,6 +248,62 @@ export default function Planner() {
 
     return () => mediaQuery.removeEventListener('change', syncViewport);
   }, []);
+
+  useEffect(() => {
+    if (typeof window === 'undefined' || !isMobileViewport) return;
+
+    const syncCompactState = () => {
+      const resultsTop = resultsGridRef.current?.getBoundingClientRect().top ?? Number.POSITIVE_INFINITY;
+      const compact = resultsTop <= 8;
+      setIsStickyCompact(compact);
+
+      if (compact && !wasCompactRef.current) {
+        setIsCalendarOpen(false);
+      }
+
+      if (!compact && wasCompactRef.current) {
+        setIsCalendarOpen(true);
+      }
+
+      wasCompactRef.current = compact;
+    };
+
+    syncCompactState();
+    window.addEventListener('scroll', syncCompactState, { passive: true });
+
+    return () => window.removeEventListener('scroll', syncCompactState);
+  }, [isMobileViewport]);
+
+  useEffect(() => {
+    if (typeof window === 'undefined' || !isMobileViewport) {
+      setMobileFilterMetrics({ height: 0, left: 0, width: 0 });
+      return;
+    }
+
+    const measure = () => {
+      const sidebar = sidebarRef.current;
+      const panel = mobileFilterPanelRef.current;
+      if (!sidebar || !panel) return;
+
+      const rect = sidebar.getBoundingClientRect();
+      setMobileFilterMetrics({
+        height: panel.offsetHeight,
+        left: rect.left,
+        width: rect.width
+      });
+    };
+
+    measure();
+    const resizeObserver = new ResizeObserver(measure);
+    if (sidebarRef.current) resizeObserver.observe(sidebarRef.current);
+    if (mobileFilterPanelRef.current) resizeObserver.observe(mobileFilterPanelRef.current);
+    window.addEventListener('resize', measure);
+
+    return () => {
+      resizeObserver.disconnect();
+      window.removeEventListener('resize', measure);
+    };
+  }, [isMobileViewport, isCalendarOpen, selectedDates.length, selectedLeagues.length]);
 
   const groupedByDate = useMemo(() => {
     return selectedDates
@@ -284,81 +348,172 @@ export default function Planner() {
       </section>
 
       <section className="contentWithSidebar">
-        <aside className="calendarSidebar">
-          <div className={`panel calendarPanel ${isMobileViewport && !isCalendarOpen ? 'compact' : ''}`}>
-            <div className="calendarHeader">
-              <h2>달력</h2>
-              {!isMobileViewport || isCalendarOpen ? (
-                <div className="calendarMove">
-                  <button onClick={() => setVisibleMonth(new Date(visibleMonth.getFullYear(), visibleMonth.getMonth() - 1, 1))}>
-                    {'<'}
+        <aside
+          ref={sidebarRef}
+          className={`calendarSidebar ${isMobileViewport ? 'mobileStickyFilters' : ''} ${isMobileViewport && isStickyCompact ? 'compact' : ''}`}
+          style={isMobileViewport && isStickyCompact && mobileFilterMetrics.height > 0 ? { height: `${mobileFilterMetrics.height}px` } : undefined}
+        >
+          {isMobileViewport ? (
+            <div
+              ref={mobileFilterPanelRef}
+              className="panel mobileFilterPanel"
+              style={
+                isMobileViewport && isStickyCompact && mobileFilterMetrics.width > 0
+                  ? {
+                      position: 'fixed',
+                      top: 0,
+                      left: mobileFilterMetrics.left,
+                      width: mobileFilterMetrics.width,
+                      zIndex: 80
+                    }
+                  : undefined
+              }
+            >
+              {!isCalendarOpen ? (
+                <div className="mobileFilterTopRow">
+                  <button
+                    type="button"
+                    className="mobileCalendarButton"
+                    onClick={() => setIsCalendarOpen((prev) => !prev)}
+                    aria-expanded={isCalendarOpen}
+                    aria-label={isCalendarOpen ? '달력 접기' : '달력 펼치기'}
+                  >
+                    <span>달력</span>
+                    <span className="mobileCalendarCaret">{isCalendarOpen ? '▲' : '▼'}</span>
                   </button>
-                  <strong>
-                    {visibleMonth.getFullYear()}년 {visibleMonth.getMonth() + 1}월
-                  </strong>
-                  <button onClick={() => setVisibleMonth(new Date(visibleMonth.getFullYear(), visibleMonth.getMonth() + 1, 1))}>
-                    {'>'}
-                  </button>
+                  <h2 className="mobileLeagueHeading">리그</h2>
                 </div>
               ) : null}
-            </div>
-            <div className={`calendarBody ${isCalendarOpen ? 'open' : 'collapsed'}`}>
-              <div className="weekdayRow">
-                {['일', '월', '화', '수', '목', '금', '토'].map((label) => (
-                  <span key={label}>{label}</span>
+
+              <div className={`calendarBody mobileCalendarBody ${isCalendarOpen ? 'open' : 'collapsed'}`}>
+                <div className="mobileCalendarHeadingRow">
+                  <button
+                    type="button"
+                    className="mobileCalendarButton mobileCalendarButtonExpanded"
+                    onClick={() => setIsCalendarOpen((prev) => !prev)}
+                    aria-expanded={isCalendarOpen}
+                    aria-label={isCalendarOpen ? '달력 접기' : '달력 펼치기'}
+                  >
+                    <span>달력</span>
+                    <span className="mobileCalendarCaret">{isCalendarOpen ? '▲' : '▼'}</span>
+                  </button>
+
+                  <div className="calendarMove mobileCalendarMove">
+                    <button onClick={() => setVisibleMonth(new Date(visibleMonth.getFullYear(), visibleMonth.getMonth() - 1, 1))}>
+                      {'<'}
+                    </button>
+                    <strong>
+                      {visibleMonth.getFullYear()}년 {visibleMonth.getMonth() + 1}월
+                    </strong>
+                    <button onClick={() => setVisibleMonth(new Date(visibleMonth.getFullYear(), visibleMonth.getMonth() + 1, 1))}>
+                      {'>'}
+                    </button>
+                  </div>
+                </div>
+                <div className="weekdayRow">
+                  {['일', '월', '화', '수', '목', '금', '토'].map((label) => (
+                    <span key={label}>{label}</span>
+                  ))}
+                </div>
+                <div className="calendarGrid">
+                  {monthGrid.map((cell) => {
+                    const iso = toISO(cell.date);
+                    const selected = selectedDates.includes(iso);
+                    return (
+                      <button
+                        key={cell.key}
+                        className={`dayCell ${cell.inMonth ? '' : 'muted'} ${selected ? 'selected' : ''}`}
+                        onClick={() => toggleDate(iso)}
+                      >
+                        {cell.date.getDate()}
+                      </button>
+                    );
+                  })}
+                </div>
+                <p className="hintText">선택한 날짜 수: {selectedDates.length}</p>
+              </div>
+
+              {isCalendarOpen ? <h2 className="mobileLeagueHeading mobileLeagueHeadingInline">리그</h2> : null}
+              <div className="leagueGrid sidebarLeagueGrid">
+                {availableLeagues.map((league) => (
+                  <button
+                    key={league.code}
+                    className={`leagueCard ${selectedLeagues.includes(league.code) ? 'active' : ''}`}
+                    aria-label={league.name}
+                    onClick={() => toggleLeague(league.code)}
+                  >
+                    <div className="leagueImageWrap">
+                      <Image src={league.imageUrl} alt={league.name} fill sizes="160px" className="leagueImage" />
+                    </div>
+                  </button>
                 ))}
               </div>
-              <div className="calendarGrid">
-                {monthGrid.map((cell) => {
-                  const iso = toISO(cell.date);
-                  const selected = selectedDates.includes(iso);
-                  return (
-                    <button
-                      key={cell.key}
-                      className={`dayCell ${cell.inMonth ? '' : 'muted'} ${selected ? 'selected' : ''}`}
-                      onClick={() => toggleDate(iso)}
-                    >
-                      {cell.date.getDate()}
+            </div>
+          ) : (
+            <>
+              <div className="panel calendarPanel">
+                <div className="calendarHeader">
+                  <h2>달력</h2>
+                  <div className="calendarMove">
+                    <button onClick={() => setVisibleMonth(new Date(visibleMonth.getFullYear(), visibleMonth.getMonth() - 1, 1))}>
+                      {'<'}
                     </button>
-                  );
-                })}
-              </div>
-              <p className="hintText">선택한 날짜 수: {selectedDates.length}</p>
-            </div>
-            <div className="calendarToggleWrap">
-              <button
-                type="button"
-                className="calendarToggleButton"
-                onClick={() => setIsCalendarOpen((prev) => !prev)}
-                aria-expanded={isCalendarOpen}
-                aria-label={isCalendarOpen ? '달력 접기' : '달력 펼치기'}
-              >
-                {isCalendarOpen ? '▲' : '▼'}
-              </button>
-            </div>
-          </div>
-
-          <div className="panel leaguePanel">
-            <h2>리그</h2>
-            <div className="leagueGrid sidebarLeagueGrid">
-              {availableLeagues.map((league) => (
-                <button
-                  key={league.code}
-                  className={`leagueCard ${selectedLeagues.includes(league.code) ? 'active' : ''}`}
-                  aria-label={league.name}
-                  onClick={() => toggleLeague(league.code)}
-                >
-                  <div className="leagueImageWrap">
-                    <Image src={league.imageUrl} alt={league.name} fill sizes="160px" className="leagueImage" />
+                    <strong>
+                      {visibleMonth.getFullYear()}년 {visibleMonth.getMonth() + 1}월
+                    </strong>
+                    <button onClick={() => setVisibleMonth(new Date(visibleMonth.getFullYear(), visibleMonth.getMonth() + 1, 1))}>
+                      {'>'}
+                    </button>
                   </div>
-                </button>
-              ))}
-            </div>
-          </div>
+                </div>
+                <div className="calendarBody open">
+                  <div className="weekdayRow">
+                    {['일', '월', '화', '수', '목', '금', '토'].map((label) => (
+                      <span key={label}>{label}</span>
+                    ))}
+                  </div>
+                  <div className="calendarGrid">
+                    {monthGrid.map((cell) => {
+                      const iso = toISO(cell.date);
+                      const selected = selectedDates.includes(iso);
+                      return (
+                        <button
+                          key={cell.key}
+                          className={`dayCell ${cell.inMonth ? '' : 'muted'} ${selected ? 'selected' : ''}`}
+                          onClick={() => toggleDate(iso)}
+                        >
+                          {cell.date.getDate()}
+                        </button>
+                      );
+                    })}
+                  </div>
+                  <p className="hintText">선택한 날짜 수: {selectedDates.length}</p>
+                </div>
+              </div>
+
+              <div className="panel leaguePanel">
+                <h2>리그</h2>
+                <div className="leagueGrid sidebarLeagueGrid">
+                  {availableLeagues.map((league) => (
+                    <button
+                      key={league.code}
+                      className={`leagueCard ${selectedLeagues.includes(league.code) ? 'active' : ''}`}
+                      aria-label={league.name}
+                      onClick={() => toggleLeague(league.code)}
+                    >
+                      <div className="leagueImageWrap">
+                        <Image src={league.imageUrl} alt={league.name} fill sizes="160px" className="leagueImage" />
+                      </div>
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </>
+          )}
         </aside>
 
         <div className="mainColumn">
-          <section className="resultsGrid">
+          <section ref={resultsGridRef} className="resultsGrid">
             <div className="panel resultsPanel">
               <div className="resultsHeader">
                 <div>

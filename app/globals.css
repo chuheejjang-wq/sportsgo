@@ -1,10 +1,20 @@
 * { box-sizing: border-box; }
-html, body { margin: 0; padding: 0; font-family: Arial, Helvetica, sans-serif; background: #f5f7fb; color: #111827; }
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+  font-family: Arial, Helvetica, sans-serif;
+  background: #f5f7fb;
+  color: #111827;
+}
 button, input { font: inherit; }
 select { font: inherit; }
 a { color: inherit; }
+img { max-width: 100%; height: auto; }
 
-.pageShell { max-width: 1400px; margin: 0 auto; padding: 24px; }
+.pageShell { width: 100%; max-width: 1400px; margin: 0 auto; padding: 24px; overflow-x: clip; }
 .heroCard, .panel { background: #fff; border: 1px solid #e5e7eb; border-radius: 20px; box-shadow: 0 10px 25px rgba(15, 23, 42, 0.05); }
 .heroCard { padding: 28px; margin-bottom: 20px; }
 .heroCard h1 { margin: 6px 0 10px; font-size: 32px; }
@@ -15,10 +25,10 @@ a { color: inherit; }
 .appNavLink.active { background: #111827; border-color: #111827; color: #fff; }
 .adminHero { display: flex; align-items: start; justify-content: space-between; gap: 16px; }
 
-.contentWithSidebar { display: grid; grid-template-columns: 280px minmax(0, 1fr); gap: 16px; align-items: start; }
-.calendarSidebar { position: sticky; top: 24px; align-self: start; display: grid; gap: 16px; }
-.mainColumn { min-width: 0; }
-.panel { padding: 20px; }
+.contentWithSidebar { display: grid; grid-template-columns: 280px minmax(0, 1fr); gap: 16px; align-items: start; overflow: visible; }
+.calendarSidebar { position: sticky; top: 24px; align-self: start; display: grid; gap: 16px; min-width: 0; }
+.mainColumn { min-width: 0; max-width: 100%; }
+.panel { padding: 20px; min-width: 0; max-width: 100%; }
 .panel h2 { margin: 0 0 14px; font-size: 20px; }
 
 .chipRow { display: flex; gap: 10px; flex-wrap: wrap; }
@@ -56,8 +66,16 @@ a { color: inherit; }
 .calendarPanel .hintText { margin-top: 10px; font-size: 13px; }
 .calendarToggleWrap { display: none; justify-content: center; margin-top: 10px; }
 .calendarToggleButton { width: 56px; height: 34px; border: 1px solid #93c5fd; background: #eff6ff; color: #1d4ed8; border-radius: 12px; cursor: pointer; font-weight: 700; box-shadow: 0 0 0 2px rgba(34, 211, 238, 0.18); }
+.mobileFilterPanel,
+.mobileFilterTopRow,
+.mobileCalendarHeadingRow,
+.mobileCalendarButton,
+.mobileLeagueHeading,
+.mobileLeagueHeadingInline,
+.mobileCalendarMove,
+.mobileCalendarCaret { display: none; }
 
-.resultsGrid { display: grid; grid-template-columns: 1.35fr 0.95fr; gap: 16px; }
+.resultsGrid { display: grid; grid-template-columns: 1.35fr 0.95fr; gap: 16px; min-width: 0; max-width: 100%; }
 .resultsPanel { min-height: 860px; }
 .resultsHeader, .mapHeader { display: flex; justify-content: space-between; gap: 12px; align-items: start; margin-bottom: 12px; }
 .dateGroup + .dateGroup { margin-top: 22px; }
@@ -162,13 +180,117 @@ a { color: inherit; }
 @media (max-width: 767px) {
   .pageShell { padding: 16px; }
   .heroCard { padding: 22px; }
-  .calendarSidebar { position: sticky; top: 8px; z-index: 30; }
+  .contentWithSidebar { align-items: start; }
+  .calendarSidebar { position: sticky; top: 0; z-index: 60; }
+  .mobileStickyFilters { position: sticky !important; top: 0; z-index: 60; }
+  .mobileStickyFilters { gap: 0; }
+  .mobileStickyFilters .mobileFilterPanel {
+    display: grid;
+    position: sticky;
+    top: env(safe-area-inset-top, 0);
+    z-index: 61;
+    gap: 12px;
+    padding: 18px;
+    border-radius: 22px;
+    background: rgba(255, 255, 255, 0.96);
+    backdrop-filter: blur(14px);
+  }
+  .mobileStickyFilters .mobileFilterTopRow {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    align-items: center;
+    gap: 12px;
+    min-height: 22px;
+  }
+  .mobileCalendarHeadingRow {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 8px;
+  }
+  .mobileCalendarButton {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    width: fit-content;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: #111827;
+    font-size: 18px;
+    font-weight: 800;
+    cursor: pointer;
+    line-height: 1;
+    justify-self: start;
+    transform: translateX(0);
+  }
+  .mobileCalendarButtonExpanded {
+    align-self: center;
+  }
+  .mobileCalendarCaret {
+    display: inline-block;
+    font-size: 16px;
+    line-height: 1;
+  }
+  .mobileLeagueHeading {
+    display: block;
+    margin: 0;
+    text-align: right;
+    font-size: 18px;
+    font-weight: 800;
+    color: #111827;
+    line-height: 1;
+    align-self: center;
+    justify-self: end;
+    min-height: 18px;
+  }
+  .mobileLeagueHeadingInline {
+    display: block;
+    text-align: left;
+    transform: none;
+    margin-top: 2px;
+    margin-bottom: 2px;
+    justify-self: start;
+    align-self: center;
+    width: fit-content;
+  }
+  .mobileCalendarBody {
+    gap: 8px;
+    overflow: hidden;
+  }
+  .mobileCalendarBody.collapsed {
+    display: none;
+  }
+  .mobileCalendarMove {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 8px;
+    margin-left: auto;
+  }
+  .mobileCalendarMove button {
+    width: 30px;
+    height: 30px;
+    border-radius: 8px;
+    border: 1px solid #d1d5db;
+    background: #fff;
+    cursor: pointer;
+  }
+  .mobileCalendarMove strong {
+    font-size: 15px;
+  }
   .sidebarLeagueGrid { grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 6px; }
+  .mobileFilterPanel .sidebarLeagueGrid { margin-top: 2px; }
   .leaguePanel .leagueCard { min-height: 56px; padding: 6px 4px; border-radius: 10px; }
   .leaguePanel .leagueImageWrap { height: 28px; }
+  .mobileFilterPanel .leagueCard { min-height: 56px; padding: 6px 4px; border-radius: 10px; }
+  .mobileFilterPanel .leagueImageWrap { width: 100%; height: 28px; }
+  .calendarPanel,
+  .leaguePanel,
+  .calendarToggleWrap { display: none; }
   .calendarPanel.compact { padding-bottom: 12px; }
   .calendarBody.collapsed { display: none; }
-  .calendarToggleWrap { display: flex; }
   .matchCard { padding: 6px 12px; }
   .matchCardMobile {
     grid-template-columns: minmax(82px, 1fr) minmax(64px, 76px) auto minmax(64px, 76px);
@@ -179,7 +301,11 @@ a { color: inherit; }
   .mobileLeagueMeta .matchSport { font-size: 15px; }
   .mobileLeagueMeta .leagueName { font-size: 14px; }
   .mobileInfoBox { min-height: 16px; font-size: 12px; }
+  .mobileTimeBox { align-self: center; }
   .mobileTeamLogoBox { width: 76px; height: 61px; }
-  .mobileTeamNamePill { min-width: 88px; max-width: 94px; min-height: 18px; padding: 0; font-size: 12px; }
+  .mobileTeamNamePill { min-width: 88px; max-width: 94px; min-height: 18px; padding: 0; font-size: 12px; align-self: center; }
   .mobileVsCenter { font-size: 16px; }
+  body {
+    padding-top: env(safe-area-inset-top, 0);
+  }
 }
