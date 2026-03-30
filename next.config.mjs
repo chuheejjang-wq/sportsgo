@@ -1,15 +1,15 @@
 import { fileURLToPath } from "node:url";
 
 const projectRoot = fileURLToPath(new URL(".", import.meta.url));
-const isGithubActions = process.env.GITHUB_ACTIONS === 'true';
+const isProduction = process.env.NODE_ENV === 'production';
 const repoName = 'sportsgo';
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   output: 'export',
   trailingSlash: true,
-  basePath: isGithubActions ? `/${repoName}` : '',
-  assetPrefix: isGithubActions ? `/${repoName}/` : '',
+  basePath: isProduction ? `/${repoName}` : '',
+  assetPrefix: isProduction ? `/${repoName}/` : '',
   turbopack: {
     root: projectRoot
   },
