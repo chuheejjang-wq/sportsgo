@@ -54,12 +54,12 @@ export const teams: Record<string, Team> = {
   lions: { id: 'lions', name: '사이타마 세이부 라이온즈', shortName: '세이부', sport: 'baseball', logoUrl: '/logos/npb/lions.png' },
   marines: { id: 'marines', name: '치바 롯데 마린즈', shortName: '지바롯데', sport: 'baseball', logoUrl: '/logos/npb/marines.png' },
 
-  reds: { id: 'reds', name: '우라와 레즈', shortName: '우라와', sport: 'football', logoUrl: '/logos/j1/reds.png' },
-  fctokyo: { id: 'fctokyo', name: 'FC 도쿄', shortName: 'FC도쿄', sport: 'football', logoUrl: '/logos/j1/fctokyo.png' },
-  yokohama: { id: 'yokohama', name: '요코하마 F. 마리노스', shortName: '요코하마FM', sport: 'football', logoUrl: '/logos/j1/yokohama.png' },
-  gamba: { id: 'gamba', name: '감바 오사카', shortName: '감바', sport: 'football', logoUrl: '/logos/j1/gamba.png' },
-  vegalta: { id: 'vegalta', name: '베갈타 센다이', shortName: '센다이', sport: 'football', logoUrl: 'https://i.namu.wiki/i/LoA0ZroRYN-YPAFpexdNtzpOSUSOeXarEB7j0VYrJfcUmiaMXgBAgwcQFF_f_oYG9YqjD-uxTLrPbpdYM_me9bjgXcKknewKkcXjIg5ByUHai3X0FQpJ3ToEQQwoUkv0Go_7YKI8qdBbRPHScmuTow.svg' },
-  iwata: { id: 'iwata', name: '주빌로 이와타', shortName: '이와타', sport: 'football', logoUrl: 'https://i.namu.wiki/i/LoA0ZroRYN-YPAFpexdNtzpOSUSOeXarEB7j0VYrJfcUmiaMXgBAgwcQFF_f_oYG9YqjD-uxTLrPbpdYM_me9bjgXcKknewKkcXjIg5ByUHai3X0FQpJ3ToEQQwoUkv0Go_7YKI8qdBbRPHScmuTow.svg' }
+  reds: { id: 'reds', name: '우라와 레즈', shortName: '우라와', sport: 'football', logoUrl: '/logos/j1/urawa.svg' },
+  fctokyo: { id: 'fctokyo', name: 'FC 도쿄', shortName: 'FC도쿄', sport: 'football', logoUrl: '/logos/j1/ftokyo.svg' },
+  yokohama: { id: 'yokohama', name: '요코하마 F. 마리노스', shortName: '요코하마FM', sport: 'football', logoUrl: '/logos/j1/yokohamafm.svg' },
+  gamba: { id: 'gamba', name: '감바 오사카', shortName: '감바', sport: 'football', logoUrl: '/logos/j1/gosaka.svg' },
+  vegalta: { id: 'vegalta', name: '베갈타 센다이', shortName: '센다이', sport: 'football', logoUrl: '/logos/j2/sendai.svg' },
+  iwata: { id: 'iwata', name: '주빌로 이와타', shortName: '이와타', sport: 'football', logoUrl: '/logos/j2/iwata.svg' }
 };
 
 export const stadiums: Record<string, Stadium> = {

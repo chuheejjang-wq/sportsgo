@@ -33,6 +33,11 @@ function toISO(date: Date) {
   return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}`;
 }
 
+function getTodayBaseDate() {
+  const now = new Date();
+  return new Date(now.getFullYear(), now.getMonth(), now.getDate());
+}
+
 function getMonthGrid(baseDate: Date): DayCell[] {
   const year = baseDate.getFullYear();
   const month = baseDate.getMonth();
@@ -186,8 +191,8 @@ export default function Planner() {
   const resultsGridRef = useRef<HTMLElement | null>(null);
   const wasCompactRef = useRef(false);
   const [selectedLeagues, setSelectedLeagues] = useState<LeagueCode[]>(() => data.leagues.map((league) => league.code));
-  const [visibleMonth, setVisibleMonth] = useState(new Date(2026, 2, 1));
-  const [selectedDates, setSelectedDates] = useState<string[]>(['2026-03-28']);
+  const [visibleMonth, setVisibleMonth] = useState(() => getTodayBaseDate());
+  const [selectedDates, setSelectedDates] = useState<string[]>(() => [toISO(getTodayBaseDate())]);
   const [focusedGameId, setFocusedGameId] = useState<string | null>(null);
   const [showOnlySelectedStadium, setShowOnlySelectedStadium] = useState(false);
   const [isMobileViewport, setIsMobileViewport] = useState(false);
@@ -552,7 +557,7 @@ export default function Planner() {
 
                               <div className="mobileInfoBox mobileStadiumBox">{game.stadium.name}</div>
 
-                              <div className="mobileTeamLogoBox mobileHomeLogoBox">
+                              <div className="teamLogoBox mobileTeamLogoBox mobileHomeLogoBox">
                                 {game.homeTeam.logoUrl ? (
                                   <Image src={game.homeTeam.logoUrl} alt={game.homeTeam.name} fill sizes="80px" className="teamLogoImage" />
                                 ) : (
@@ -562,7 +567,7 @@ export default function Planner() {
 
                               <span className="mobileVsCenter">VS</span>
 
-                              <div className="mobileTeamLogoBox mobileAwayLogoBox">
+                              <div className="teamLogoBox mobileTeamLogoBox mobileAwayLogoBox">
                                 {game.awayTeam.logoUrl ? (
                                   <Image src={game.awayTeam.logoUrl} alt={game.awayTeam.name} fill sizes="80px" className="teamLogoImage" />
                                 ) : (
@@ -589,9 +594,27 @@ export default function Planner() {
                               </div>
 
                               <div className="matchBodyRow compact">
-                                <div className="teamNameCell">{game.homeTeam.shortName}</div>
+                                <div className="teamColumn">
+                                  <div className="teamLogoBox desktopTeamLogoBox">
+                                    {game.homeTeam.logoUrl ? (
+                                      <Image src={game.homeTeam.logoUrl} alt={game.homeTeam.name} fill sizes="84px" className="teamLogoImage" />
+                                    ) : (
+                                      <span className="teamLogoFallback">Home</span>
+                                    )}
+                                  </div>
+                                  <div className="teamNameCell centered">{game.homeTeam.shortName}</div>
+                                </div>
                                 <span className="vsCenter">VS</span>
-                                <div className="teamNameCell right">{game.awayTeam.shortName}</div>
+                                <div className="teamColumn">
+                                  <div className="teamLogoBox desktopTeamLogoBox">
+                                    {game.awayTeam.logoUrl ? (
+                                      <Image src={game.awayTeam.logoUrl} alt={game.awayTeam.name} fill sizes="84px" className="teamLogoImage" />
+                                    ) : (
+                                      <span className="teamLogoFallback">Away</span>
+                                    )}
+                                  </div>
+                                  <div className="teamNameCell centered">{game.awayTeam.shortName}</div>
+                                </div>
                               </div>
                             </>
                           )}

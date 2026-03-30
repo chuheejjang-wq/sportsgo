@@ -1,10 +1,11 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { teams as seedTeamMap } from './games';
 import { stadiums as seedStadiumMap } from './games';
 import { leagues as seedLeagues } from './leagues';
 import { games as seedGames } from './schedules';
-import { Game, League, Stadium } from './types';
+import { Game, League, Stadium, Team } from './types';
 
 const STORAGE_KEY = 'sportsgo-admin-data-v2';
 const STORAGE_EVENT = 'sportsgo-admin-data-updated';
@@ -25,11 +26,15 @@ function cloneStadium(stadium: Stadium): Stadium {
   return { ...stadium };
 }
 
+function cloneTeam(team: Team): Team {
+  return { ...team };
+}
+
 function cloneGame(game: Game): Game {
   return {
     ...game,
-    homeTeam: { ...game.homeTeam },
-    awayTeam: { ...game.awayTeam },
+    homeTeam: cloneTeam(game.homeTeam),
+    awayTeam: cloneTeam(game.awayTeam),
     stadium: cloneStadium(game.stadium)
   };
 }
@@ -52,10 +57,14 @@ function buildSeedData(): PlannerData {
   };
 }
 
-function syncGamesWithStadiums(games: Game[], stadiums: Stadium[]): Game[] {
+function syncGamesWithReferenceData(games: Game[], stadiums: Stadium[]): Game[] {
   const stadiumById = Object.fromEntries(stadiums.map((stadium) => [stadium.id, stadium]));
+  const teamById = Object.fromEntries(Object.values(seedTeamMap).map((team) => [team.id, team]));
+
   return games.map((game) => ({
     ...cloneGame(game),
+    homeTeam: teamById[game.homeTeam.id] ? cloneTeam(teamById[game.homeTeam.id]) : cloneTeam(game.homeTeam),
+    awayTeam: teamById[game.awayTeam.id] ? cloneTeam(teamById[game.awayTeam.id]) : cloneTeam(game.awayTeam),
     stadium: stadiumById[game.stadium.id] ? cloneStadium(stadiumById[game.stadium.id]) : cloneStadium(game.stadium)
   }));
 }
@@ -65,7 +74,7 @@ function normalizeData(input: PlannerData): PlannerData {
   return {
     leagues: input.leagues.map(cloneLeague),
     stadiums,
-    games: syncGamesWithStadiums(input.games, stadiums)
+    games: syncGamesWithReferenceData(input.games, stadiums)
   };
 }
 
