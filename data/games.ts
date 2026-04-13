@@ -15,7 +15,7 @@ export const teams: Record<string, Team> = {
   gangwon: { id: 'gangwon', name: '강원 FC', shortName: '강원', sport: 'football', logoUrl: 'https://raw.githubusercontent.com/chuheejjang-wq/sportsgo/refs/heads/master/public/logos/kleague1/gangwon.png' },
   gwangju: { id: 'gwangju', name: '광주 FC', shortName: '광주', sport: 'football', logoUrl: 'https://raw.githubusercontent.com/chuheejjang-wq/sportsgo/refs/heads/master/public/logos/kleague1/gwangju.png' },
   gimcheon: { id: 'gimcheon', name: '김천 상무 FC', shortName: '김천', sport: 'football', logoUrl: 'https://raw.githubusercontent.com/chuheejjang-wq/sportsgo/refs/heads/master/public/logos/kleague1/gimcheon.png' },
-  daejeonCitizen: { id: 'daejeonCitizen', name: '대전 하나 시티즌', shortName: '대전', sport: 'football', logoUrl: 'https://raw.githubusercontent.com/chuheejjang-wq/sportsgo/refs/heads/master/public/logos/kleague1/daejeonCitizen.png' },
+  daejeonCitizen: { id: 'daejeonCitizen', name: '대전 하나 시티즌', shortName: '대전', sport: 'football', logoUrl: 'https://raw.githubusercontent.com/chuheejjang-wq/sportsgo/refs/heads/master/public/logos/kleague1/daejeon.png' },
   seoul: { id: 'seoul', name: 'FC 서울', shortName: '서울', sport: 'football', logoUrl: 'https://raw.githubusercontent.com/chuheejjang-wq/sportsgo/refs/heads/master/public/logos/kleague1/seoul.png' },
   anyang: { id: 'anyang', name: 'FC 안양', shortName: '안양', sport: 'football', logoUrl: 'https://raw.githubusercontent.com/chuheejjang-wq/sportsgo/refs/heads/master/public/logos/kleague1/anyang.png' },
   ulsan: { id: 'ulsan', name: '울산 HD FC', shortName: '울산', sport: 'football', logoUrl: 'https://raw.githubusercontent.com/chuheejjang-wq/sportsgo/refs/heads/master/public/logos/kleague1/ulsan.png' },
