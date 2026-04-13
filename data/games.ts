@@ -23,11 +23,12 @@ export const teams: Record<string, Team> = {
   jeonbuk: { id: 'jeonbuk', name: '전북 현대 모터스', shortName: '전북', sport: 'football', logoUrl: 'https://raw.githubusercontent.com/chuheejjang-wq/sportsgo/refs/heads/master/public/logos/kleague1/jeonbuk.png' },
   jeju: { id: 'jeju', name: '제주 SK FC', shortName: '제주', sport: 'football', logoUrl: 'https://raw.githubusercontent.com/chuheejjang-wq/sportsgo/refs/heads/master/public/logos/kleague1/jeju.png' },
   pohang: { id: 'pohang', name: '포항 스틸러스', shortName: '포항', sport: 'football', logoUrl: 'https://raw.githubusercontent.com/chuheejjang-wq/sportsgo/refs/heads/master/public/logos/kleague1/pohang.png' },
-
+  bucheon: { id: 'bucheon', name: '부천 FC', shortName: '부천', sport: 'football', logoUrl: 'https://raw.githubusercontent.com/chuheejjang-wq/sportsgo/refs/heads/master/public/logos/kleague1/bucheon.png' },
+  
   gyeongnam: { id: 'gyeongnam', name: '경남 FC', shortName: '경남', sport: 'football', logoUrl: 'https://raw.githubusercontent.com/chuheejjang-wq/sportsgo/refs/heads/master/public/logos/kleague2/gyeongnam.png' },
   gimpo: { id: 'gimpo', name: '김포 FC', shortName: '김포', sport: 'football', logoUrl: 'https://raw.githubusercontent.com/chuheejjang-wq/sportsgo/refs/heads/master/public/logos/kleague2/gimpo.png' },
   gimhae: { id: 'gimhae', name: '김해 FC 2008', shortName: '김해', sport: 'football', logoUrl: 'https://raw.githubusercontent.com/chuheejjang-wq/sportsgo/refs/heads/master/public/logos/kleague2/gimhae.png' },
-  daegu: { id: 'daegu', name: '대구 FC', shortName: '대구', sport: 'football', logoUrl: 'https://raw.githubusercontent.com/chuheejjang-wq/sportsgo/refs/heads/master/public/logos/kleague1/daegu.png' },
+  daegu: { id: 'daegu', name: '대구 FC', shortName: '대구', sport: 'football', logoUrl: 'https://raw.githubusercontent.com/chuheejjang-wq/sportsgo/refs/heads/master/public/logos/kleague2/daegu.png' },
   busan: { id: 'busan', name: '부산 아이파크', shortName: '부산', sport: 'football', logoUrl: 'https://raw.githubusercontent.com/chuheejjang-wq/sportsgo/refs/heads/master/public/logos/kleague2/busan.png' },
   seoulE: { id: 'seoulE', name: '서울 이랜드 FC', shortName: '서울E', sport: 'football', logoUrl: 'https://raw.githubusercontent.com/chuheejjang-wq/sportsgo/refs/heads/master/public/logos/kleague2/seoulE.png' },
   seongnam: { id: 'seongnam', name: '성남 FC', shortName: '성남', sport: 'football', logoUrl: 'https://raw.githubusercontent.com/chuheejjang-wq/sportsgo/refs/heads/master/public/logos/kleague2/seongnam.png' },
